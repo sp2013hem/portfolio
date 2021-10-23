@@ -1,21 +1,108 @@
 const { guessProductionMode } = require("@ngneat/tailwind");
 
-process.env.TAILWIND_MODE = guessProductionMode() ? 'build' : 'watch';
+process.env.TAILWIND_MODE = guessProductionMode() ? "build" : "watch";
 
 module.exports = {
-    prefix: '',
-    mode: 'jit',
-    purge: {
-      content: [
-        './src/**/*.{html,ts,css,scss,sass,less,styl}',
-      ]
+  prefix: "",
+  mode: "jit",
+  purge: {
+    content: ["./src/**/*.{html,ts,css,scss,sass,less,styl}"],
+  },
+  darkMode: "class", // or 'media' or 'class'
+  theme: {
+    extend: {
+      fontFamily: {
+        sans: ["Rajdhani", "sans-serif"],
+        serif: ["ui-serif", "Georgia"],
+        mono: ["ui-monospace", "SFMono-Regular"],
+      },
     },
-    darkMode: 'class', // or 'media' or 'class'
-    theme: {
-      extend: {},
-    },
-    variants: {
-      extend: {},
-    },
-    plugins: [require('@tailwindcss/forms'),require('@tailwindcss/typography')],
+  },
+  variants: {
+    extend: {},
+  },
+  plugins: [
+    require("@tailwindcss/forms"),
+    require("@tailwindcss/typography"),
+    require("daisyui"),
+  ],
+  daisyui: {
+    styled: true,
+    themes: [
+      {
+        light: {
+          primary: "#65c3c8",
+          "primary-focus": "#42b2b8",
+          "primary-content": "#ffffff",
+          secondary: "#ef9fbc",
+          "secondary-focus": "#e8739e",
+          "secondary-content": "#ffffff",
+          accent: "#eeaf3a",
+          "accent-focus": "#e19914",
+          "accent-content": "#ffffff",
+          neutral: "#291334",
+          "neutral-focus": "#200f29",
+          "neutral-content": "#ffffff",
+          "base-100": "#faf7f5",
+          "base-200": "#efeae6",
+          "base-300": "#e7e2df",
+          "base-content": "#291334",
+          info: "#2094f3",
+          success: "#23dd00",
+          warning: "#ff9900",
+          error: "#ff5724",
+          "--border-color": "var(--b3)",
+          "--rounded-box": "1rem",
+          "--rounded-btn": "1.9rem",
+          "--rounded-badge": "1.9rem",
+          "--animation-btn": "0.25s",
+          "--animation-input": ".2s",
+          "--btn-text-case": "uppercase",
+          "--btn-focus-scale": "0.95",
+          "--navbar-padding": ".5rem",
+          "--border-btn": "1px",
+          "--tab-border": "2px",
+          "--tab-radius": ".5rem",
+        },
+        dark: {
+          primary: "#65c3c8",
+          "primary-focus": "#42b2b8",
+          "primary-content": "#ffffff",
+          secondary: "#ef9fbc",
+          "secondary-focus": "#e8739e",
+          "secondary-content": "#ffffff",
+          accent: "#eeaf3a",
+          "accent-focus": "#e19914",
+          "accent-content": "#ffffff",
+          neutral: "#2a2e37",
+          "neutral-focus": "#16181d",
+          "neutral-content": "#ffffff",
+          "base-100": "#3d4451",
+          "base-200": "#2a2e37",
+          "base-300": "#16181d",
+          "base-content": "#ebecf0",
+          info: "#2094f3",
+          success: "#23dd00",
+          warning: "#ff9900",
+          error: "#ff5724",
+          "--border-color": "var(--b3)",
+          "--rounded-box": "1rem",
+          "--rounded-btn": "1.9rem",
+          "--rounded-badge": "1.9rem",
+          "--animation-btn": "0.25s",
+          "--animation-input": ".2s",
+          "--btn-text-case": "uppercase",
+          "--btn-focus-scale": "0.95",
+          "--navbar-padding": ".5rem",
+          "--border-btn": "1px",
+          "--tab-border": "2px",
+          "--tab-radius": ".5rem",
+        },
+      },
+    ],
+    base: true,
+    utils: true,
+    logs: true,
+    rtl: false,
+  },
 };
