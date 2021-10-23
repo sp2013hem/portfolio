@@ -10,7 +10,13 @@ module.exports = {
   },
   darkMode: "class", // or 'media' or 'class'
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        sans: ["Rajdhani", "sans-serif"],
+        serif: ["ui-serif", "Georgia"],
+        mono: ["ui-monospace", "SFMono-Regular"],
+      },
+    },
   },
   variants: {
     extend: {},
@@ -68,7 +74,7 @@ module.exports = {
           accent: "#eeaf3a",
           "accent-focus": "#e19914",
           "accent-content": "#ffffff",
-          "neutral": "#2a2e37",
+          neutral: "#2a2e37",
           "neutral-focus": "#16181d",
           "neutral-content": "#ffffff",
           "base-100": "#3d4451",
