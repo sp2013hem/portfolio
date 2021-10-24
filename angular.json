@@ -34,7 +34,8 @@
               "src/styles.scss"
             ],
             "scripts": [
-              "./node_modules/stocks.js/dist/stocks.js"]
+              "./node_modules/stocks.js/dist/stocks.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -108,5 +109,8 @@
       }
     }
   },
-  "defaultProject": "portfolio-tracker"
+  "defaultProject": "portfolio-tracker",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }
