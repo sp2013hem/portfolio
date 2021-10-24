@@ -4,7 +4,7 @@ import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
   },
   {
@@ -13,13 +13,13 @@ const routes: Routes = [
       import('./settings/settings.module').then((m) => m.SettingsModule),
   },
   {
-    path: '',
+    path: 'login',
     loadChildren: () =>
       import('./login/login.module').then((m) => m.LoginModule),
   },
   {
     path: '**',
-    redirectTo: 'home',
+    redirectTo: '',
     pathMatch: 'prefix',
   },
 ];
