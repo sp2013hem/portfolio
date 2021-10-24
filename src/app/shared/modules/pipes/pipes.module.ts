@@ -1,10 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 import { SanitizeHtmlPipe } from './safe-html.pipe';
 
 @NgModule({
   declarations: [SanitizeHtmlPipe],
-  imports: [BrowserModule],
+  imports: [CommonModule],
   exports: [SanitizeHtmlPipe],
 })
 export class SharedPipesModule {}

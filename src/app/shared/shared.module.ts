@@ -1,12 +1,12 @@
+import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
 
 import { IconComponent } from './components/icon/icon.component';
 import { SharedPipesModule } from './modules/pipes/pipes.module';
 
 @NgModule({
   declarations: [IconComponent],
-  imports: [BrowserModule, SharedPipesModule],
+  imports: [CommonModule, SharedPipesModule],
   exports: [IconComponent],
 })
 export class SharedModule {}

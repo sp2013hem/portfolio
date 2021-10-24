@@ -5,11 +5,11 @@ import { AngularFirestoreModule } from '@angular/fire/compat/firestore';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { environment } from 'src/environments/environment';
+import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StocksAPI } from './core/services/stocks.service';
 import { SharedPipesModule } from './shared/modules/pipes/pipes.module';
 import { SideNavModule } from './shared/modules/side-nav/side-nav.module';
-import { StatsModule } from './shared/modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -19,9 +19,9 @@ import { SharedModule } from './shared/shared.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireAnalyticsModule,
     AngularFirestoreModule,
+    AppRoutingModule,
     SharedModule,
     SideNavModule,
-    StatsModule,
     SharedPipesModule,
   ],
   providers: [StocksAPI],

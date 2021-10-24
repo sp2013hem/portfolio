@@ -17,18 +17,22 @@ export class SideNavComponent {
     {
       title: 'Home',
       icon: 'home',
+      url: '/home',
     },
     {
       title: 'About',
       icon: 'info',
+      url: '/info',
     },
     {
       title: 'Contact',
       icon: 'contact',
+      url: '/contact',
     },
   ];
   settingsLink: NavLink = {
     title: 'Settings',
     icon: 'settings',
+    url: '/settings',
   };
 }
