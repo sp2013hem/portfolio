@@ -9,6 +9,7 @@ import { StocksAPI } from './core/services/stocks.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
+  loggedIn = location.pathname !== '/';
   TSLA$: Observable<TickerData> = this.stocksAPI.getStockData(
     'TSLA',
     'daily',

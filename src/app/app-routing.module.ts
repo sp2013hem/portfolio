@@ -13,6 +13,11 @@ const routes: Routes = [
       import('./settings/settings.module').then((m) => m.SettingsModule),
   },
   {
+    path: '',
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginModule),
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'prefix',
