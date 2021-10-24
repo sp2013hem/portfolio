@@ -14,14 +14,16 @@ import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireAnalyticsModule,
+    AngularFireAuthModule,
     AngularFirestoreModule,
+    AngularFireAnalyticsModule,
     AppRoutingModule,
     SharedModule,
     SideNavModule,
