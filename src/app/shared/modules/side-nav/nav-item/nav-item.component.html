@@ -1,14 +1,14 @@
 <a
   class="
-    btn btn-ghost btn-sm
-    rounded-btn
+    btn btn-ghost
+    rounded-none
     text-xl
-    mt-4
+    my-2
     flex
-    justify-center
+    justify-start
     items-center
   "
-  *ngFor="let item of links"
+  *ngIf="item"
 >
   <app-icon class="inline-block w-6 h-6 mr-2" [path]="item.icon"></app-icon>
   {{ item.title }}

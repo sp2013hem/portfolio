@@ -1,4 +1,4 @@
-<div class="flex justify-center items-center">
+<div class="flex justify-center items-center flex-initial">
   <svg
     class="w-16 h-16"
     xmlns="http://www.w3.org/2000/svg"
@@ -15,4 +15,12 @@
   </svg>
 </div>
 
-<app-nav-links class="flex flex-col mt-8 items-start"></app-nav-links>
+<div class="flex flex-col mt-8 items-start flex-auto">
+  <app-nav-item
+    class="w-full"
+    *ngFor="let item of links"
+    [item]="item"
+  ></app-nav-item>
+</div>
+
+<app-nav-item class="flex-initial" [item]="settingsLink"></app-nav-item>
