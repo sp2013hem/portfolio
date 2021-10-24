@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 import { HomeRoutingModule } from './home-routing.module';
-import { HomeComponent } from './home.component';
-import { StatsComponent } from './stats/stats.component';
-import { TableComponent } from './table/table.component';
+
+import { StatsComponent } from './components/stats/stats.component';
+import { TableComponent } from './components/table/table.component';
+import { HomeComponent } from './pages/home/home.component';
 
 @NgModule({
   declarations: [HomeComponent, StatsComponent, TableComponent],
