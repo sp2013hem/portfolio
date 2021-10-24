@@ -11,6 +11,7 @@ import { StocksAPI } from './core/services/stocks.service';
 import { SharedPipesModule } from './shared/modules/pipes/pipes.module';
 import { SideNavModule } from './shared/modules/side-nav/side-nav.module';
 import { SharedModule } from './shared/shared.module';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,6 +24,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     SideNavModule,
     SharedPipesModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [StocksAPI],
   bootstrap: [AppComponent],

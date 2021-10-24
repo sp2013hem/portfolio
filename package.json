@@ -20,13 +20,14 @@
     "@angular/platform-browser-dynamic": "~12.2.0",
     "@angular/router": "~12.2.0",
     "@ngneat/tailwind": "^7.0.3",
+    "@ngrx/store": "^12.5.0",
     "daisyui": "^1.16.0",
+    "firebase": "^9.1.0",
+    "rxfire": "^6.0.0",
     "rxjs": "~6.6.0",
     "stocks.js": "0.0.19",
     "tslib": "^2.3.0",
-    "zone.js": "~0.11.4",
-    "firebase": "^9.1.0",
-    "rxfire": "^6.0.0"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~12.2.11",
