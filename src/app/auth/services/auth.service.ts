@@ -12,7 +12,6 @@ export class AuthService {
   constructor(private fireAuthService: AngularFireAuth) {}
   checkAuth(): Observable<UserModel | null> {
     return this.fireAuthService.authState.pipe(
-      tap((r) => console.log('state:', r)),
       map((res) =>
         !res
           ? null
@@ -25,14 +24,21 @@ export class AuthService {
       )
     );
   }
-  signInWithGoogle(): Observable<firebase.auth.UserCredential> {
+  signInWithGoogle(): Observable<UserModel> {
     return from(
       this.fireAuthService.signInWithPopup(
         new firebase.auth.GoogleAuthProvider()
       )
     ).pipe(
-      tap((res) => res.user),
-      catchError((err) => throwError(null))
+      map(
+        (res: any) =>
+          ({
+            uid: res.user.uid,
+            email: res.user.email,
+            photoURL: res.user.photoURL,
+            displayName: res.user.displayName,
+          } as UserModel)
+      )
     );
   }
 

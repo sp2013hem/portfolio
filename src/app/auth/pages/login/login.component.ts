@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { tap } from 'rxjs/operators';
-import { AuthService } from '../../services/auth.service';
+import { Store } from '@ngrx/store';
+import { loadCheckAuths } from '../../../shared/store/actions/check-auth.actions';
+import { loadSignInWithGoogles } from '../../../shared/store/actions/sign-in-with-google.actions';
+import { State } from '../../../shared/store/reducers/auth.reducer';
+import { getAuthLoading } from '../../../shared/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-login',
@@ -9,13 +11,13 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  authLoading$ = this.authStore.select(getAuthLoading);
   signIn() {
-    return this.authService
-      .signInWithGoogle()
-      .pipe(tap(() => this.router.navigate(['/'])))
-      .subscribe();
+    return this.authStore.dispatch(loadSignInWithGoogles());
   }
-  constructor(private router: Router, private authService: AuthService) {}
+  constructor(private authStore: Store<State>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.authStore.dispatch(loadCheckAuths());
+  }
 }

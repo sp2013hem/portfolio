@@ -25,6 +25,7 @@
       </p>
       <button
         (click)="signIn()"
+        [ngClass]="{ 'btn-disabled loading': (authLoading$ | async) }"
         class="btn btn-lg btn-primary flex justify-between items-center mx-auto"
       >
         <svg
