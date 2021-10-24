@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { tap } from 'rxjs/operators';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
@@ -8,9 +10,12 @@ import { AuthService } from '../../services/auth.service';
 })
 export class LoginComponent implements OnInit {
   signIn() {
-    return this.authService.signInWithGoogle().subscribe();
+    return this.authService
+      .signInWithGoogle()
+      .pipe(tap(() => this.router.navigate(['/'])))
+      .subscribe();
   }
-  constructor(private authService: AuthService) {}
+  constructor(private router: Router, private authService: AuthService) {}
 
   ngOnInit(): void {}
 }

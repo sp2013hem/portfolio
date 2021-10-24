@@ -5,8 +5,8 @@
 </div>
 <img src="https://s3.polygon.io/logos/ibm/logo.png" alt="" srcset="" /> -->
 
-<ng-container *ngIf="user$ | async as user; else routerTmpl"
-  ><div class="flex flex-row h-screen">
+<ng-container *ngIf="user$ | async as user; else routerTmpl">
+  <div class="flex flex-row h-screen">
     <div class="w-60 bg-primary bg-opacity-30">
       <app-side-nav class="flex flex-col h-full py-6"></app-side-nav>
     </div>
@@ -21,15 +21,16 @@
         </div>
         <div class="avatar">
           <div class="rounded-btn w-10 h-10">
-            <img [src]="user?.photoURL" />
+            <img [src]="user?.photoURL" (click)="signOut()" />
           </div>
         </div>
       </div>
       <div class="flex flex-col mt-8">
         <ng-container *ngTemplateOutlet="routerTmpl"></ng-container>
       </div>
-    </div></div
-></ng-container>
+    </div>
+  </div>
+</ng-container>
 
 <ng-template #routerTmpl>
   <router-outlet></router-outlet>

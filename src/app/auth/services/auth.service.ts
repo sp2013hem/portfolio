@@ -12,6 +12,7 @@ export class AuthService {
   constructor(private fireAuthService: AngularFireAuth) {}
   checkAuth(): Observable<UserModel | null> {
     return this.fireAuthService.authState.pipe(
+      tap((r) => console.log('state:', r)),
       map((res) =>
         !res
           ? null
