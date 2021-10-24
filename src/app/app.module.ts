@@ -7,6 +7,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { environment } from 'src/environments/environment';
 import { AppComponent } from './app.component';
 import { StocksAPI } from './core/services/stocks.service';
+import { SharedPipesModule } from './shared/modules/pipes/pipes.module';
 import { SideNavModule } from './shared/modules/side-nav/side-nav.module';
 import { StatsModule } from './shared/modules/stats/stats.module';
 import { SharedModule } from './shared/shared.module';
@@ -21,6 +22,7 @@ import { SharedModule } from './shared/shared.module';
     SharedModule,
     SideNavModule,
     StatsModule,
+    SharedPipesModule,
   ],
   providers: [StocksAPI],
   bootstrap: [AppComponent],
