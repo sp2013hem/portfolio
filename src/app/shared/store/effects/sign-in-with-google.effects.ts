@@ -25,10 +25,15 @@ export class SignInWithGoogleEffects {
         this.authService.signInWithGoogle().pipe(
           map((user) =>
             user
-              ? loadSignInWithGooglesSuccess({ user })
-              : loadSignInWithGooglesFailure({ error: 'login failed' })
+              ? loadSignInWithGooglesSuccess({ processingSignIn: false, user })
+              : loadSignInWithGooglesFailure({
+                  processingSignIn: false,
+                  error: 'login failed',
+                })
           ),
-          catchError((error) => of(loadSignInWithGooglesFailure({ error })))
+          catchError((error) =>
+            of(loadSignInWithGooglesFailure({ processingSignIn: false, error }))
+          )
         )
       )
     )

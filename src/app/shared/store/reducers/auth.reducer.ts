@@ -20,46 +20,52 @@ export const AUTH_FEATURE_KEY = 'auth';
 
 export interface State {
   user: UserModel | null;
-  loading: boolean;
+  processingSignIn: boolean;
   error: string | null;
+  processingSignOut: boolean;
 }
 
 export const initialState: State = {
   user: null,
-  loading: false,
   error: null,
+  processingSignIn: false,
+  processingSignOut: false,
 };
 
 export const reducer = createReducer<State, Action>(
   initialState,
-  on(loadCheckAuths, (state) => ({ ...state, loading: true })),
+  on(loadCheckAuths, (state) => ({ ...state })),
   on(loadCheckAuthsSuccess, (state, action) => ({
     ...state,
-    loading: false,
     user: action.user,
   })),
   on(loadCheckAuthsFailure, (state, action) => ({
     ...state,
-    loading: false,
     error: action.error,
   })),
-  on(loadSignInWithGoogles, (state) => ({ ...state, loading: true })),
+  on(loadSignInWithGoogles, (state) => ({ ...state, processingSignIn: true })),
   on(loadSignInWithGooglesSuccess, (state, action) => ({
     ...state,
-    loading: false,
+    processingSignIn: false,
     user: action.user,
   })),
   on(loadSignInWithGooglesFailure, (state, action) => ({
     ...state,
-    loading: false,
+    processingSignIn: false,
     error: action.error,
+  })),
+  on(loadSignOuts, (state) => ({
+    ...state,
+    processingSignOut: true,
   })),
   on(loadSignOutsSuccess, (state) => ({
     ...state,
     user: null,
+    processingSignOut: false,
   })),
   on(loadSignOutsFailure, (state, action) => ({
     ...state,
     error: action.error,
+    processingSignOut: false,
   }))
 );

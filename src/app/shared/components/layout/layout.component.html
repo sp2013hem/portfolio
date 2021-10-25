@@ -1,0 +1,51 @@
+<div class="relative min-h-screen md:flex">
+  <div class="bg-gray-800 text-gray-100 flex justify-between md:hidden">
+    <button class="mobile-menu-button p-4 focus:outline-none focus:bg-gray-700">
+      <svg
+        class="h-5 w-5"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"
+        />
+      </svg>
+    </button>
+  </div>
+
+  <app-side-nav
+    class="
+      sidebar
+      bg-primary
+      z-50
+      md:z-0 md:bg-opacity-30
+      text-blue-100
+      w-64
+      space-y-6
+      py-7
+      absolute
+      inset-y-0
+      left-0
+      transform
+      -translate-x-full
+      md:relative md:translate-x-0
+      transition
+      duration-200
+      ease-in-out
+      flex flex-col
+    "
+  >
+  </app-side-nav>
+
+  <div class="flex-1 p-10 text-2xl font-bold">
+    <app-header class="flex flex-row justify-between items-start"></app-header>
+    <div class="flex flex-col mt-8">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

@@ -5,33 +5,21 @@
 </div>
 <img src="https://s3.polygon.io/logos/ibm/logo.png" alt="" srcset="" /> -->
 
-<ng-container *ngIf="user$ | async as user; else routerTmpl">
-  <div class="flex flex-row h-screen">
-    <div class="w-60 bg-primary bg-opacity-30">
-      <app-side-nav class="flex flex-col h-full py-6"></app-side-nav>
-    </div>
-    <div class="flex-auto bg-base-100 overflow-auto p-10">
-      <div class="flex flex-row justify-between items-start">
-        <div>
-          <p class="text-3xl">
-            Welcome to
-            <span class="text-primary font-bold">Portfolio Tracker</span>
-          </p>
-          <p class="prose-lg">Good Morning, {{ user?.displayName }}</p>
-        </div>
-        <div class="avatar">
-          <div class="rounded-btn w-10 h-10">
-            <img [src]="user?.photoURL" (click)="signOut()" />
-          </div>
-        </div>
-      </div>
-      <div class="flex flex-col mt-8">
-        <ng-container *ngTemplateOutlet="routerTmpl"></ng-container>
-      </div>
-    </div>
-  </div>
-</ng-container>
-
-<ng-template #routerTmpl>
-  <router-outlet></router-outlet>
-</ng-template>
+<button
+  *ngIf="signOutLoading$ | async"
+  class="
+    btn btn-sm btn-ghost
+    loading
+    rounded-none
+    fixed
+    inset-0
+    m-auto
+    w-screen
+    h-screen
+    z-50
+    bg-base-200
+  "
+>
+  loading...
+</button>
+<router-outlet></router-outlet>

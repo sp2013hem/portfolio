@@ -7,7 +7,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SharedPipesModule } from './shared/modules/pipes/pipes.module';
-import { SideNavModule } from './shared/modules/side-nav/side-nav.module';
 import { SharedModule } from './shared/shared.module';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
@@ -24,6 +23,7 @@ import {
 import { CheckAuthEffects } from './shared/store/effects/check-auth.effects';
 import { SignInWithGoogleEffects } from './shared/store/effects/sign-in-with-google.effects';
 import { SignOutEffects } from './shared/store/effects/sign-out.effects';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +35,6 @@ import { SignOutEffects } from './shared/store/effects/sign-out.effects';
     AngularFireAnalyticsModule,
     AppRoutingModule,
     SharedModule,
-    SideNavModule,
     SharedPipesModule,
     StoreModule.forRoot({
       [AUTH_FEATURE_KEY]: reducer,
@@ -48,6 +47,12 @@ import { SignOutEffects } from './shared/store/effects/sign-out.effects';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
   providers: [AuthService, CheckSignedInGuard, CheckSignedOutGuard],

@@ -8,12 +8,17 @@ export const getAuthUser = createSelector(
   (state) => state.user
 );
 
-export const getAuthLoading = createSelector(
+export const getAuthSignInLoading = createSelector(
   authFeatureSelector,
-  (state) => state.loading
+  (state) => state.processingSignIn
 );
 
 export const getAuthError = createSelector(
   authFeatureSelector,
   (state) => state.error
+);
+
+export const getSignOutLoading = createSelector(
+  authFeatureSelector,
+  (state) => state.processingSignOut
 );

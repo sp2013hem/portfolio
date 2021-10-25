@@ -23,8 +23,10 @@ export class SignOutEffects {
       ofType(loadSignOuts),
       mergeMap(() =>
         this.authService.signOutWithGoogle().pipe(
-          map(() => loadSignOutsSuccess()),
-          catchError((error) => of(loadSignOutsFailure({ error })))
+          map(() => loadSignOutsSuccess({ processingSignOut: true })),
+          catchError((error) =>
+            of(loadSignOutsFailure({ processingSignOut: true, error }))
+          )
         )
       )
     )

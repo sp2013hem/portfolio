@@ -15,7 +15,7 @@ module.exports = {
         sans: ["Kumbh Sans", "sans-serif"],
         serif: ["ui-serif", "Georgia"],
         mono: ["ui-monospace", "SFMono-Regular"],
-      },
+      }
     },
   },
   variants: {

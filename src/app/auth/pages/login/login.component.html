@@ -1,4 +1,13 @@
-<div class="hero min-h-screen bg-base-200">
+<div
+  class="
+    hero
+    min-h-screen
+    bg-base-200 bg-gradient-to-r
+    from-base-100
+    via-base-200
+    to-base-300
+  "
+>
   <div class="text-center hero-content">
     <div class="max-w-md">
       <div class="flex justify-center items-center flex-initial">
@@ -18,15 +27,24 @@
         </svg>
       </div>
 
-      <h1 class="mb-5 text-3xl font-bold">Welcome to Portfolio Tracker!</h1>
-      <p class="mb-5">
-        Sign-in/Register with your Goolge account to track your investment
-        portfolio.
+      <h1 class="mt-7 mb-7 text-3xl font-bold">
+        Welcome to Portfolio Tracker!
+      </h1>
+      <p class="my-10">
+        Sign-in or Register with your Goolge account to track performance of
+        your investment portfolio.
       </p>
       <button
         (click)="signIn()"
-        [ngClass]="{ 'btn-disabled loading': (authLoading$ | async) }"
-        class="btn btn-lg btn-primary flex justify-between items-center mx-auto"
+        [ngClass]="{ 'btn-disabled loading': (authSignInLoading$ | async) }"
+        class="
+          btn btn-lg btn-primary
+          flex
+          justify-between
+          items-center
+          mx-auto
+          capitalize
+        "
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

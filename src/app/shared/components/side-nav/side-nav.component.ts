@@ -10,7 +10,7 @@ export class SideNavComponent {
     {
       title: 'Home',
       icon: 'home',
-      url: '/home',
+      url: '/',
     },
     {
       title: 'About',

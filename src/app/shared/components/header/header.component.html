@@ -1,0 +1,14 @@
+<ng-container *ngIf="user$ | async as user">
+  <div>
+    <p class="text-3xl">
+      Welcome to
+      <span class="text-primary font-bold">Portfolio Tracker</span>
+    </p>
+    <app-greet [name]="user?.displayName"></app-greet>
+  </div>
+  <div class="avatar">
+    <div class="rounded-btn w-10 h-10">
+      <img [src]="user?.photoURL" (click)="signOut()" />
+    </div>
+  </div>
+</ng-container>
