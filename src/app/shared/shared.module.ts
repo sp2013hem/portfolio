@@ -9,6 +9,7 @@ import { NavItemComponent } from './components/nav-item/nav-item.component';
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { RouterModule } from '@angular/router';
 import { GreetComponent } from './components/greet/greet.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 @NgModule({
   declarations: [
@@ -18,8 +19,9 @@ import { GreetComponent } from './components/greet/greet.component';
     NavItemComponent,
     SideNavComponent,
     GreetComponent,
+    AvatarComponent,
   ],
   imports: [CommonModule, RouterModule, SharedPipesModule],
-  exports: [IconComponent, GreetComponent, LayoutComponent],
+  exports: [IconComponent, LayoutComponent],
 })
 export class SharedModule {}

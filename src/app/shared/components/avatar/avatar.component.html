@@ -1,0 +1,7 @@
+<ng-container *ngIf="user$ | async as user">
+  <div class="avatar">
+    <div class="rounded-btn w-9 h-9">
+      <img [src]="user?.photoURL" (click)="signOut()" />
+    </div>
+  </div>
+</ng-container>

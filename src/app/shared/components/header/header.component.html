@@ -6,9 +6,5 @@
     </p>
     <app-greet [name]="user?.displayName"></app-greet>
   </div>
-  <div class="avatar">
-    <div class="rounded-btn w-10 h-10">
-      <img [src]="user?.photoURL" (click)="signOut()" />
-    </div>
-  </div>
+  <app-avatar class="hidden md:block"></app-avatar>
 </ng-container>
