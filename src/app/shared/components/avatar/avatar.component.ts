@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadSignOut } from '../../../store/actions/sign-out.actions';
-import { State } from '../../../store/reducers/auth.reducer';
-import { getAuthUser } from '../../../store/selectors/auth.selectors';
+import { loadSignOut } from '../../../auth/store/actions/sign-out.actions';
+import { State } from '../../../auth/store/reducers/auth.reducer';
+import { getAuthUser } from '../../../auth/store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-avatar',

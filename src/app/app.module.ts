@@ -19,10 +19,10 @@ import { CheckSignedOutGuard } from './auth/guards/check-signed-out.guard';
 import {
   AUTH_FEATURE_KEY,
   reducer,
-} from './store/reducers/auth.reducer';
-import { CheckAuthEffects } from './store/effects/check-auth.effects';
-import { SignInWithGoogleEffects } from './store/effects/sign-in-with-google.effects';
-import { SignOutEffects } from './store/effects/sign-out.effects';
+} from './auth/store/reducers/auth.reducer';
+import { CheckAuthEffects } from './auth/store/effects/check-auth.effects';
+import { SignInWithGoogleEffects } from './auth/store/effects/sign-in-with-google.effects';
+import { SignOutEffects } from './auth/store/effects/sign-out.effects';
 import { ServiceWorkerModule } from '@angular/service-worker';
 
 @NgModule({
