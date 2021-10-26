@@ -7,13 +7,8 @@ import { CheckSignedOutGuard } from './auth/guards/check-signed-out.guard';
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-    canActivate: [CheckSignedInGuard],
-  },
-  {
-    path: 'settings',
     loadChildren: () =>
-      import('./settings/settings.module').then((m) => m.SettingsModule),
+      import('./pages/shell.module').then((m) => m.ShellModule),
     canActivate: [CheckSignedInGuard],
   },
   {

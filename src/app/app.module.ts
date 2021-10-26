@@ -18,7 +18,7 @@ import { CheckSignedInGuard } from './auth/guards/check-signed-in.guard';
 import { CheckSignedOutGuard } from './auth/guards/check-signed-out.guard';
 import {
   AUTH_FEATURE_KEY,
-  authReducer,
+  AuthReducer,
 } from './auth/store/reducers/auth.reducer';
 import { CheckAuthEffects } from './auth/store/effects/check-auth.effects';
 import { SignInWithGoogleEffects } from './auth/store/effects/sign-in-with-google.effects';
@@ -37,10 +37,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SharedModule,
     SharedPipesModule,
     StoreModule.forRoot({
-      [AUTH_FEATURE_KEY]: authReducer,
+      [AUTH_FEATURE_KEY]: AuthReducer,
     }),
-    CheckAuthEffects,
     EffectsModule.forRoot([
+      CheckAuthEffects,
       SignInWithGoogleEffects,
       SignOutEffects,
     ]),
@@ -52,7 +52,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
       // or after 30 seconds (whichever comes first).
-      registrationStrategy: 'registerWhenStable:30000'
+      registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
   providers: [AuthService, CheckSignedInGuard, CheckSignedOutGuard],

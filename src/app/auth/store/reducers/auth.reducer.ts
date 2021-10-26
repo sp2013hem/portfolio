@@ -32,7 +32,7 @@ export const initialState: AuthState = {
   processingSignOut: false,
 };
 
-export const authReducer = createReducer<AuthState, Action>(
+export const AuthReducer = createReducer<AuthState, Action>(
   initialState,
   on(loadCheckAuth, (state) => ({ ...state })),
   on(loadCheckAuthSuccess, (state, action) => ({
