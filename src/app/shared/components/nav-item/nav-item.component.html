@@ -12,6 +12,7 @@
   *ngIf="item"
   [routerLink]="item.url"
   [routerLinkActive]="['btn-active']"
+  [routerLinkActiveOptions]="{ exact: true }"
 >
   <app-icon class="inline-block w-6 h-6 mr-2" [path]="item.icon"></app-icon>
   {{ item.title }}
