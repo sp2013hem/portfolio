@@ -5,9 +5,9 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthService } from '../../../auth/services/auth.service';
 import {
-  loadSignInWithGoogles,
-  loadSignInWithGooglesFailure,
-  loadSignInWithGooglesSuccess,
+  loadSignInWithGoogle,
+  loadSignInWithGoogleFailure,
+  loadSignInWithGoogleSuccess,
 } from '../actions/sign-in-with-google.actions';
 
 @Injectable()
@@ -20,19 +20,19 @@ export class SignInWithGoogleEffects {
 
   signInWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadSignInWithGoogles),
+      ofType(loadSignInWithGoogle),
       mergeMap(() =>
         this.authService.signInWithGoogle().pipe(
           map((user) =>
             user
-              ? loadSignInWithGooglesSuccess({ processingSignIn: false, user })
-              : loadSignInWithGooglesFailure({
+              ? loadSignInWithGoogleSuccess({ processingSignIn: false, user })
+              : loadSignInWithGoogleFailure({
                   processingSignIn: false,
                   error: 'login failed',
                 })
           ),
           catchError((error) =>
-            of(loadSignInWithGooglesFailure({ processingSignIn: false, error }))
+            of(loadSignInWithGoogleFailure({ processingSignIn: false, error }))
           )
         )
       )
@@ -42,7 +42,7 @@ export class SignInWithGoogleEffects {
   signInWithGoogleSucces$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(loadSignInWithGooglesSuccess),
+        ofType(loadSignInWithGoogleSuccess),
         tap(() => this.router.navigate(['/']))
       ),
     { dispatch: false }

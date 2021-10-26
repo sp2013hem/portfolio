@@ -1,16 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadSignOuts = createAction(
+export const loadSignOut = createAction(
   '[SignOut] Load SignOuts',
   props<{ processingSignOut: true }>()
 );
 
-export const loadSignOutsSuccess = createAction(
+export const loadSignOutSuccess = createAction(
   '[SignOut] Load SignOuts Success',
   props<{ processingSignOut: true }>()
 );
 
-export const loadSignOutsFailure = createAction(
+export const loadSignOutFailure = createAction(
   '[SignOut] Load SignOuts Failure',
   props<{ processingSignOut: true; error: string }>()
 );

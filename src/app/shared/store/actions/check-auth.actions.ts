@@ -1,14 +1,14 @@
 import { createAction, props } from '@ngrx/store';
 import { UserModel } from 'src/app/core/models/user.model';
 
-export const loadCheckAuths = createAction('[CheckAuth] Load CheckAuths');
+export const loadCheckAuth = createAction('[CheckAuth] Load CheckAuths');
 
-export const loadCheckAuthsSuccess = createAction(
+export const loadCheckAuthSuccess = createAction(
   '[CheckAuth] Load CheckAuths Success',
   props<{ user: UserModel }>()
 );
 
-export const loadCheckAuthsFailure = createAction(
+export const loadCheckAuthFailure = createAction(
   '[CheckAuth] Load CheckAuths Failure',
   props<{ error: string }>()
 );

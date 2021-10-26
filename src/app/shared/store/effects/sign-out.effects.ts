@@ -5,9 +5,9 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthService } from '../../../auth/services/auth.service';
 import {
-  loadSignOuts,
-  loadSignOutsFailure,
-  loadSignOutsSuccess,
+  loadSignOut,
+  loadSignOutFailure,
+  loadSignOutSuccess,
 } from '../actions/sign-out.actions';
 
 @Injectable()
@@ -20,12 +20,12 @@ export class SignOutEffects {
 
   signOutWithGoogle$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadSignOuts),
+      ofType(loadSignOut),
       mergeMap(() =>
         this.authService.signOutWithGoogle().pipe(
-          map(() => loadSignOutsSuccess({ processingSignOut: true })),
+          map(() => loadSignOutSuccess({ processingSignOut: true })),
           catchError((error) =>
-            of(loadSignOutsFailure({ processingSignOut: true, error }))
+            of(loadSignOutFailure({ processingSignOut: true, error }))
           )
         )
       )
@@ -35,7 +35,7 @@ export class SignOutEffects {
   signOutWithGoogleSucces$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(loadSignOutsSuccess),
+        ofType(loadSignOutSuccess),
         tap(() => this.router.navigate(['/login']))
       ),
     { dispatch: false }

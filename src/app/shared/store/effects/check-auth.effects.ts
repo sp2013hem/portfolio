@@ -5,9 +5,9 @@ import { of } from 'rxjs';
 import { catchError, map, mergeMap, tap } from 'rxjs/operators';
 import { AuthService } from '../../../auth/services/auth.service';
 import {
-  loadCheckAuths,
-  loadCheckAuthsFailure,
-  loadCheckAuthsSuccess,
+  loadCheckAuth,
+  loadCheckAuthFailure,
+  loadCheckAuthSuccess,
 } from '../actions/check-auth.actions';
 
 @Injectable()
@@ -20,15 +20,15 @@ export class CheckAuthEffects {
 
   checkAuth$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadCheckAuths),
+      ofType(loadCheckAuth),
       mergeMap(() =>
         this.authService.checkAuth().pipe(
           map((user) =>
             user
-              ? loadCheckAuthsSuccess({ user })
-              : loadCheckAuthsFailure({ error: 'user rejected' })
+              ? loadCheckAuthSuccess({ user })
+              : loadCheckAuthFailure({ error: 'user rejected' })
           ),
-          catchError((error) => of(loadCheckAuthsFailure({ error })))
+          catchError((error) => of(loadCheckAuthFailure({ error })))
         )
       )
     )
@@ -37,7 +37,7 @@ export class CheckAuthEffects {
   checkAuthSucces$ = createEffect(
     () =>
       this.actions$.pipe(
-        ofType(loadCheckAuthsSuccess),
+        ofType(loadCheckAuthSuccess),
         tap(() => this.router.navigate(['/']))
       ),
     { dispatch: false }

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadCheckAuths } from './shared/store/actions/check-auth.actions';
+import { loadCheckAuth } from './shared/store/actions/check-auth.actions';
 import { State } from './shared/store/reducers/auth.reducer';
 import {
   getAuthUser,
@@ -18,6 +18,6 @@ export class AppComponent {
 
   constructor(private authStore: Store<State>) {}
   ngOnInit(): void {
-    this.authStore.dispatch(loadCheckAuths());
+    this.authStore.dispatch(loadCheckAuth());
   }
 }

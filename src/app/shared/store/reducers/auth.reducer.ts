@@ -1,19 +1,19 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { UserModel } from 'src/app/core/models/user.model';
 import {
-  loadCheckAuths,
-  loadCheckAuthsFailure,
-  loadCheckAuthsSuccess,
+  loadCheckAuth,
+  loadCheckAuthFailure,
+  loadCheckAuthSuccess,
 } from '../actions/check-auth.actions';
 import {
-  loadSignInWithGoogles,
-  loadSignInWithGooglesFailure,
-  loadSignInWithGooglesSuccess,
+  loadSignInWithGoogle,
+  loadSignInWithGoogleFailure,
+  loadSignInWithGoogleSuccess,
 } from '../actions/sign-in-with-google.actions';
 import {
-  loadSignOuts,
-  loadSignOutsFailure,
-  loadSignOutsSuccess,
+  loadSignOut,
+  loadSignOutFailure,
+  loadSignOutSuccess,
 } from '../actions/sign-out.actions';
 
 export const AUTH_FEATURE_KEY = 'auth';
@@ -34,36 +34,36 @@ export const initialState: State = {
 
 export const reducer = createReducer<State, Action>(
   initialState,
-  on(loadCheckAuths, (state) => ({ ...state })),
-  on(loadCheckAuthsSuccess, (state, action) => ({
+  on(loadCheckAuth, (state) => ({ ...state })),
+  on(loadCheckAuthSuccess, (state, action) => ({
     ...state,
     user: action.user,
   })),
-  on(loadCheckAuthsFailure, (state, action) => ({
+  on(loadCheckAuthFailure, (state, action) => ({
     ...state,
     error: action.error,
   })),
-  on(loadSignInWithGoogles, (state) => ({ ...state, processingSignIn: true })),
-  on(loadSignInWithGooglesSuccess, (state, action) => ({
+  on(loadSignInWithGoogle, (state) => ({ ...state, processingSignIn: true })),
+  on(loadSignInWithGoogleSuccess, (state, action) => ({
     ...state,
     processingSignIn: false,
     user: action.user,
   })),
-  on(loadSignInWithGooglesFailure, (state, action) => ({
+  on(loadSignInWithGoogleFailure, (state, action) => ({
     ...state,
     processingSignIn: false,
     error: action.error,
   })),
-  on(loadSignOuts, (state) => ({
+  on(loadSignOut, (state) => ({
     ...state,
     processingSignOut: true,
   })),
-  on(loadSignOutsSuccess, (state) => ({
+  on(loadSignOutSuccess, (state) => ({
     ...state,
     user: null,
     processingSignOut: false,
   })),
-  on(loadSignOutsFailure, (state, action) => ({
+  on(loadSignOutFailure, (state, action) => ({
     ...state,
     error: action.error,
     processingSignOut: false,
