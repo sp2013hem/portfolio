@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadSignInWithGoogle } from '../../../shared/store/actions/sign-in-with-google.actions';
-import { State } from '../../../shared/store/reducers/auth.reducer';
-import { getAuthSignInLoading } from '../../../shared/store/selectors/auth.selectors';
+import { loadSignInWithGoogle } from '../../../store/actions/sign-in-with-google.actions';
+import { State } from '../../../store/reducers/auth.reducer';
+import { getAuthSignInLoading } from '../../../store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-login',

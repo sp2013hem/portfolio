@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { State } from '../../store/reducers/auth.reducer';
-import { getAuthUser } from '../../store/selectors/auth.selectors';
+import { State } from '../../../store/reducers/auth.reducer';
+import { getAuthUser } from '../../../store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-header',

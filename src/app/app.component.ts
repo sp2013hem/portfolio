@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadCheckAuth } from './shared/store/actions/check-auth.actions';
-import { State } from './shared/store/reducers/auth.reducer';
+import { loadCheckAuth } from './store/actions/check-auth.actions';
+import { State } from './store/reducers/auth.reducer';
 import {
   getAuthUser,
   getSignOutLoading,
-} from './shared/store/selectors/auth.selectors';
+} from './store/selectors/auth.selectors';
 
 @Component({
   selector: 'app-root',
