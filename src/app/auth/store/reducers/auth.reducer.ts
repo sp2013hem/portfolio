@@ -18,21 +18,21 @@ import {
 
 export const AUTH_FEATURE_KEY = 'auth';
 
-export interface State {
+export interface AuthState {
   user: UserModel | null;
   processingSignIn: boolean;
   error: string | null;
   processingSignOut: boolean;
 }
 
-export const initialState: State = {
+export const initialState: AuthState = {
   user: null,
   error: null,
   processingSignIn: false,
   processingSignOut: false,
 };
 
-export const reducer = createReducer<State, Action>(
+export const authReducer = createReducer<AuthState, Action>(
   initialState,
   on(loadCheckAuth, (state) => ({ ...state })),
   on(loadCheckAuthSuccess, (state, action) => ({

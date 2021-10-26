@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadSignOut } from '../../../auth/store/actions/sign-out.actions';
-import { State } from '../../../auth/store/reducers/auth.reducer';
+import { AuthState } from '../../../auth/store/reducers/auth.reducer';
 import { getAuthUser } from '../../../auth/store/selectors/auth.selectors';
 
 @Component({
@@ -14,7 +14,7 @@ export class AvatarComponent implements OnInit {
   signOut() {
     this.authStore.dispatch(loadSignOut({ processingSignOut: true }));
   }
-  constructor(private authStore: Store<State>) {}
+  constructor(private authStore: Store<AuthState>) {}
 
   ngOnInit(): void {}
 }

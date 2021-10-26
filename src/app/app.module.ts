@@ -18,7 +18,7 @@ import { CheckSignedInGuard } from './auth/guards/check-signed-in.guard';
 import { CheckSignedOutGuard } from './auth/guards/check-signed-out.guard';
 import {
   AUTH_FEATURE_KEY,
-  reducer,
+  authReducer,
 } from './auth/store/reducers/auth.reducer';
 import { CheckAuthEffects } from './auth/store/effects/check-auth.effects';
 import { SignInWithGoogleEffects } from './auth/store/effects/sign-in-with-google.effects';
@@ -37,10 +37,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     SharedModule,
     SharedPipesModule,
     StoreModule.forRoot({
-      [AUTH_FEATURE_KEY]: reducer,
+      [AUTH_FEATURE_KEY]: authReducer,
     }),
+    CheckAuthEffects,
     EffectsModule.forRoot([
-      CheckAuthEffects,
       SignInWithGoogleEffects,
       SignOutEffects,
     ]),

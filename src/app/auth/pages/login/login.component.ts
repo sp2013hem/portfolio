@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadSignInWithGoogle } from '../../store/actions/sign-in-with-google.actions';
-import { State } from '../../store/reducers/auth.reducer';
+import { AuthState } from '../../store/reducers/auth.reducer';
 import { getAuthSignInLoading } from '../../store/selectors/auth.selectors';
 
 @Component({
@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
       loadSignInWithGoogle({ processingSignIn: true })
     );
   }
-  constructor(private authStore: Store<State>) {}
+  constructor(private authStore: Store<AuthState>) {}
 
   ngOnInit(): void {}
 }

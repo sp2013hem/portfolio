@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { loadCheckAuth } from './auth/store/actions/check-auth.actions';
-import { State } from './auth/store/reducers/auth.reducer';
+import { AuthState } from './auth/store/reducers/auth.reducer';
 import {
   getAuthUser,
   getSignOutLoading,
@@ -16,7 +16,7 @@ export class AppComponent {
   user$ = this.authStore.select(getAuthUser);
   signOutLoading$ = this.authStore.select(getSignOutLoading);
 
-  constructor(private authStore: Store<State>) {}
+  constructor(private authStore: Store<AuthState>) {}
   ngOnInit(): void {
     this.authStore.dispatch(loadCheckAuth());
   }
