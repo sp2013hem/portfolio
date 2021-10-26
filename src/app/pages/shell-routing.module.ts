@@ -8,14 +8,14 @@ const routes: Routes = [
     component: ShellComponent,
     children: [
       {
-        path: '',
-        loadChildren: () =>
-          import('./home/home.module').then((m) => m.HomeModule),
-      },
-      {
         path: 'settings',
         loadChildren: () =>
           import('./settings/settings.module').then((m) => m.SettingsModule),
+      },
+      {
+        path: '',
+        loadChildren: () =>
+          import('./home/home.module').then((m) => m.HomeModule),
       },
     ],
   },

@@ -1,10 +1,8 @@
-<ng-container *ngIf="user$ | async as user">
-  <div>
-    <p class="text-3xl">
-      Welcome to
-      <span class="text-primary font-bold">Portfolio Tracker</span>
-    </p>
-    <app-greet [name]="user?.displayName"></app-greet>
-  </div>
-  <app-avatar class="hidden md:block"></app-avatar>
-</ng-container>
+<div>
+  <p class="text-3xl">
+    Welcome to
+    <span class="text-primary font-bold">Portfolio Tracker</span>
+  </p>
+  <app-greet [name]="(user$ | async)?.displayName"></app-greet>
+</div>
+<app-avatar class="hidden md:block"></app-avatar>

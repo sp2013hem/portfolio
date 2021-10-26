@@ -38,7 +38,7 @@ export class CheckAuthEffects {
     () =>
       this.actions$.pipe(
         ofType(loadCheckAuthSuccess),
-        tap(() => this.router.navigate(['/']))
+        // tap(() => this.router.navigate(['/']))
       ),
     { dispatch: false }
   );

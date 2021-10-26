@@ -9,12 +9,12 @@ const routes: Routes = [
     path: '',
     loadChildren: () =>
       import('./pages/shell.module').then((m) => m.ShellModule),
-    canActivate: [CheckSignedInGuard],
+    // canActivate: [CheckSignedInGuard],
   },
   {
     path: 'login',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    canActivate: [CheckSignedOutGuard],
+    // canActivate: [CheckSignedOutGuard],
   },
   {
     path: '**',
@@ -26,7 +26,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      enableTracing: environment.production,
+      enableTracing: !environment.production,
       relativeLinkResolution: 'legacy',
       paramsInheritanceStrategy: 'always',
     }),

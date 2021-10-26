@@ -26,7 +26,7 @@ export class CheckSignedOutGuard implements CanActivate {
     return this.authService.checkAuth().pipe(
       map((user) => user === null),
       tap((isSignedOut) =>
-        isSignedOut ? route : this.router.navigate(['/home'])
+        isSignedOut ? route : this.router.navigate(['/app'])
       )
     );
   }
