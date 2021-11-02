@@ -1,23 +1,15 @@
-import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { loadCheckAuth } from './auth/store/actions/check-auth.actions';
-import { AuthState } from './auth/store/reducers/auth.reducer';
-import {
-  getAuthUser,
-  getSignOutLoading,
-} from './auth/store/selectors/auth.selectors';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-root',
+  selector: 'app-app',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
+  styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  user$ = this.authStore.select(getAuthUser);
-  signOutLoading$ = this.authStore.select(getSignOutLoading);
+export class AppComponent implements OnInit {
 
-  constructor(private authStore: Store<AuthState>) {}
+  constructor() { }
+
   ngOnInit(): void {
-    this.authStore.dispatch(loadCheckAuth());
   }
+
 }
