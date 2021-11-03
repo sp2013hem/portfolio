@@ -26,9 +26,10 @@ import { AddPortfolioComponent } from './components/add-portfolio/add-portfolio.
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MyPortfoliosComponent } from './components/my-portfolios/my-portfolios.component';
 
 @NgModule({
-  declarations: [HomeComponent, TableComponent, AddPortfolioComponent],
+  declarations: [HomeComponent, TableComponent, AddPortfolioComponent, MyPortfoliosComponent],
   providers: [StocksAPI],
   imports: [
     CommonModule,

@@ -22,7 +22,7 @@ import {
   MyPortfoliosSuccess,
   RequestCreatePortfolio,
   RequestMyPortfolios,
-} from './stocks.actions';
+} from './my-portfolios.actions';
 
 @Injectable()
 export class Effects {

@@ -1,0 +1,32 @@
+<h4 *ngIf="!portfolios.length" class="text-center">
+  Looks like there are no Portfolios!<br />
+  <button class="mt-3" mat-raised-button color="primary" (click)="openDialog()">
+    Add one
+  </button>
+</h4>
+
+<mat-accordion *ngFor="let porfolio of portfolios">
+  <mat-expansion-panel
+    class="mb-2"
+    (opened)="panelOpenState = true"
+    (closed)="panelOpenState = false"
+  >
+    <mat-expansion-panel-header class="mat-elevation-z1 rounded-none">
+      <mat-panel-title class="flex items-center pl-4">
+        <mat-icon
+          *ngIf="porfolio.isMain"
+          color="primary"
+          class="absolute left-2"
+          >star</mat-icon
+        >
+        {{ porfolio.name }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <app-table class="block" [data]="data"></app-table>
+  </mat-expansion-panel>
+</mat-accordion>
+<h4 *ngIf="portfolios.length && portfolios.length < 4" class="text-right">
+  <button class="mt-3" mat-raised-button color="primary" (click)="openDialog()">
+    Add another ?
+  </button>
+</h4>

@@ -7,7 +7,7 @@ import {
   MyPortfoliosSuccess,
   RequestCreatePortfolio,
   RequestMyPortfolios,
-} from './stocks.actions';
+} from './my-portfolios.actions';
 
 export const PORTFOLIO_FEATURE_KEY = 'portfolio';
 

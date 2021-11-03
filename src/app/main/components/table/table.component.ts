@@ -7,13 +7,7 @@ import {
 } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
+import { TickerData } from 'src/app/core/models/stocks.model';
 
 @Component({
   selector: 'app-table',
@@ -21,15 +15,15 @@ export interface PeriodicElement {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements AfterViewInit, OnInit {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
   dataSource;
+  displayedColumns: string[] = ['ticker', 'value', 'position', 'pl', 'totalPL'];
 
-  @Input() data: PeriodicElement[];
+  @Input() data: TickerData[];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   ngOnInit() {
-    this.dataSource = new MatTableDataSource<PeriodicElement>(this.data);
+    this.dataSource = new MatTableDataSource<TickerData>(this.data);
   }
 
   ngAfterViewInit() {

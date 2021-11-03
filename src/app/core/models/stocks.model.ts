@@ -115,14 +115,14 @@ export type INTERVALS = typeof INTERVALS[number];
 
 export type PERFORMANCES = typeof PERFORMANCES[number];
 
-export interface TickerData {
-  open: number;
-  high: number;
-  low: number;
-  close: number;
-  volume: number;
-  date: Date;
-}
+// export interface TickerData {
+//   open: number;
+//   high: number;
+//   low: number;
+//   close: number;
+//   volume: number;
+//   date: Date;
+// }
 
 export const FunctionTypes = [
   'OVERVIEW',
@@ -131,8 +131,23 @@ export const FunctionTypes = [
   'TIME_SERIES_DAILY',
 ] as const;
 
+export interface TickerData {
+  ticker: string;
+  value: number;
+  position: number;
+  pl: number;
+  totalPL: number;
+  open?: number;
+  high?: number;
+  low?: number;
+  close?: number;
+  volume?: number;
+  date?: Date;
+}
+
 export interface Portfolio {
   name: string;
   uid: string;
   isMain: boolean;
+  tickers: TickerData[];
 }

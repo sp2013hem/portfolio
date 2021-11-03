@@ -1,5 +1,5 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PortfolioState, PORTFOLIO_FEATURE_KEY } from './stocks.reducer';
+import { PortfolioState, PORTFOLIO_FEATURE_KEY } from './my-portfolios.reducer';
 
 const portfolioFeatureSelector = createFeatureSelector<PortfolioState>(
   PORTFOLIO_FEATURE_KEY
