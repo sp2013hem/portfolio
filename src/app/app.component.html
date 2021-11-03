@@ -1,14 +1,29 @@
-<mat-toolbar color="primary">
+<mat-toolbar color="primary" class="mat-elevation-z6">
   <mat-toolbar-row>
+    <img
+      *ngIf="user$ | async as user"
+      [src]="user?.photoURL"
+      class="h-9 mr-2 rounded-full relative"
+    />
     <span>Portfolio Tracker</span>
     <span class="flex-auto"></span>
-    <mat-icon>login</mat-icon>
+    <button
+      *ngIf="isAuthenticated$ | async"
+      matTooltip="Logout"
+      matTooltipPosition="left"
+      (click)="logout()"
+    >
+      <mat-icon> logout</mat-icon>
+    </button>
   </mat-toolbar-row>
   <mat-progress-bar
+    *ngIf="processingAuth$ | async"
     class="absolute"
     mode="indeterminate"
     color="accent"
   ></mat-progress-bar>
 </mat-toolbar>
 
-<router-outlet></router-outlet>
+<main class="pt-4" [hidden]="processingAuth$ | async">
+  <router-outlet></router-outlet>
+</main>

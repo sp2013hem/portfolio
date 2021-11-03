@@ -47,7 +47,7 @@ $portfolio-tracker-primary: mat.define-palette(
   )
 );
 
-$portfolio-tracker-accent: mat.define-palette(mat.$yellow-palette);
+$portfolio-tracker-accent: mat.define-palette(mat.$purple-palette);
 
 // The warn palette is optional (defaults to red).
 $portfolio-tracker-warn: mat.define-palette(mat.$red-palette);
@@ -83,13 +83,31 @@ html {
   @include mat.all-component-themes($portfolio-tracker-theme);
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    background: #1b1e1b;
-    @include mat.all-component-themes($portfolio-tracker-dark-theme);
-  }
-}
+// @media (prefers-color-scheme: dark) {
+//   html {
+//     background: #1b1e1b;
+//     @include mat.all-component-themes($portfolio-tracker-dark-theme);
+//   }
+// }
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spinner:before {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #cbf9db;
+  border-top-color: #1b1e1b;
+  animation: spinner 0.8s linear infinite;
+}

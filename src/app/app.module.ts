@@ -18,10 +18,14 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
+
 import { AppRoutingModule } from './app-routing.module';
+import { reducers, metaReducers } from './store/state';
+import { CoreModule } from './core/core.module';
+import { AuthEffects } from './auth/store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -34,8 +38,8 @@ import { AppRoutingModule } from './app-routing.module';
     AngularFireAuthModule,
     AngularFirestoreModule,
     AngularFireAnalyticsModule,
-    StoreModule.forRoot([], {}),
-    EffectsModule.forRoot([]),
+    StoreModule.forRoot(reducers, { metaReducers }),
+    EffectsModule.forRoot([AuthEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production,
@@ -44,10 +48,12 @@ import { AppRoutingModule } from './app-routing.module';
       enabled: environment.production,
       registrationStrategy: 'registerImmediately',
     }),
+    MatTooltipModule,
     MatToolbarModule,
     MatIconModule,
     MatProgressBarModule,
     AppRoutingModule,
+    CoreModule,
   ],
 })
 export class AppModule {}

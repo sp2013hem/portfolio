@@ -1,4 +1,18 @@
-.example-card {
-  max-width: 400px;
-  margin-bottom: 8px;
+$header_height: 64px;
+:host {
+  @apply grid;
+  grid-template-areas:
+    "header header"
+    "main main";
+  grid-template-columns: auto 9fr;
+  grid-template-rows: $header_height calc(100vh - #{$header_height});
+}
+
+mat-toolbar {
+  grid-area: header;
+}
+
+main {
+  grid-area: main;
+  overflow-y: auto;
 }
