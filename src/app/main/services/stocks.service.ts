@@ -1,12 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { from, Observable, of } from 'rxjs';
+import { delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
 import {
   INTERVALS,
   TICKER,
   TickerData,
   FunctionTypes,
+  Portfolio,
 } from 'src/app/core/models/stocks.model';
 import { environment } from 'src/environments/environment';
 
@@ -23,7 +25,10 @@ const DEFAULT_URL = `https://www.alphavantage.co/query?apikey=${environment.key}
 @Injectable({ providedIn: 'root' })
 export class StocksAPI {
   // self = new Stocks(environment.key);
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private fireStoreService: AngularFirestore
+  ) {}
   getCompanyInfo(symbol = 'IBM') {
     return this.request({ function: 'OVERVIEW', symbol });
   }
@@ -57,6 +62,36 @@ export class StocksAPI {
     );
   }
 
+  getPortfolios(uid: string): Observable<Portfolio[]> {
+    // return of([
+    //   { isMain: true, name: Math.random().toString(), uid: Math.random().toString() },
+    //   { isMain: false, name: '21', uid: Math.random().toString() },
+    //   { isMain: false, name: 'IB', uid: Math.random().toString() },
+    // ]).pipe(delay(2000));
+    return this.fireStoreService
+      .collection(`/users/${uid}/portfolios`)
+      .get()
+      .pipe(
+        map((snap) =>
+          snap.docs.map((doc) => {
+            return { uid: doc.id, ...(doc.data() as object) } as Portfolio;
+          })
+        )
+      );
+  }
+
+  createPortfolio(
+    data: { name: string; isMain: boolean },
+    uid: string
+  ): Observable<boolean> {
+    // return of(true).pipe(delay(2000));
+    return from(
+      this.fireStoreService
+        .collection(`/users/${uid}/portfolios`)
+        .doc(this.fireStoreService.createId())
+        .set(data)
+    ).pipe(mapTo(true));
+  }
   // getStockData(
   //   symbol: TICKER,
   //   interval: INTERVALS,

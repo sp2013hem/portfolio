@@ -13,7 +13,7 @@
       matTooltipPosition="left"
       (click)="logout()"
     >
-      <mat-icon> logout</mat-icon>
+      <mat-icon>logout</mat-icon>
     </button>
   </mat-toolbar-row>
   <mat-progress-bar
@@ -24,6 +24,6 @@
   ></mat-progress-bar>
 </mat-toolbar>
 
-<main class="p-4" [hidden]="processingAuth$ | async">
+<main class="p-4" *ngIf="!(processingAuth$ | async)">
   <router-outlet></router-outlet>
 </main>

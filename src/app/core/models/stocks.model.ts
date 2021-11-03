@@ -130,3 +130,9 @@ export const FunctionTypes = [
   'TIME_SERIES_INTRADAY',
   'TIME_SERIES_DAILY',
 ] as const;
+
+export interface Portfolio {
+  name: string;
+  uid: string;
+  isMain: boolean;
+}

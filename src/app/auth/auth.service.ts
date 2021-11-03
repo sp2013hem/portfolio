@@ -27,15 +27,6 @@ export class AuthService {
       )
     ).pipe(
       switchMap((res) => this.checkAndCreateUserDoc(res?.user)),
-      // map(
-      //   (res: any) =>
-      //     ({
-      //       uid: res.user.uid,
-      //       email: res.user.email,
-      //       photoURL: res.user.photoURL,
-      //       displayName: res.user.displayName,
-      //     } as UserModel)
-      // ),
       catchError((err) => of(err))
     );
   }

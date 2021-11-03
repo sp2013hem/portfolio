@@ -1,16 +1,20 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter } from 'rxjs/operators';
+import { filter, tap } from 'rxjs/operators';
 import { AuthSelectors } from 'src/app/auth/store';
-import { StocksAPI } from '../services/stocks.service';
+import { AddPortfolioComponent } from '../components/add-portfolio/add-portfolio.component';
+import { PortfolioActions, PortfolioSelectors } from '../store';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
 })
-export class HomeComponent implements OnDestroy {
+export class HomeComponent implements OnDestroy, OnInit {
+  panelOpenState;
+  dialogRef;
   data = [
     { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
     { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
@@ -33,21 +37,39 @@ export class HomeComponent implements OnDestroy {
     { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
     { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
   ];
-  $ = this.store
+  _$ = this.store
     .select(AuthSelectors.isAuthenticated)
     .pipe(filter((d) => !d))
     .subscribe(() => this.router.navigate(['/login']));
-  user$ = this.store.select(AuthSelectors.UserInfo);
 
-  constructor(
-    private router: Router,
-    private store: Store,
-    private stocks: StocksAPI
-  ) {
-    // this.stocks.getStockData().subscribe()
+  processingMyPortfolios$ = this.store.select(
+    PortfolioSelectors.processingMyPortfolios
+  );
+  user$ = this.store.select(AuthSelectors.UserInfo);
+  portfolios$ = this.store.select(PortfolioSelectors.Portfolios);
+
+  openDialog() {
+    const ref = this.dialog.open(AddPortfolioComponent);
+
+    this.dialogRef = ref.afterClosed().subscribe((data) => {
+      if (data) {
+        this.store.dispatch(PortfolioActions.RequestMyPortfolios());
+        // this.dialogRef?.unsubscribe();
+      }
+    });
   }
 
+  constructor(
+    public dialog: MatDialog,
+    private router: Router,
+    private store: Store
+  ) {}
+
+  ngOnInit() {
+    this.store.dispatch(PortfolioActions.RequestMyPortfolios());
+  }
   ngOnDestroy() {
-    this.$.unsubscribe();
+    this.dialogRef?.unsubscribe();
+    this._$.unsubscribe();
   }
 }
