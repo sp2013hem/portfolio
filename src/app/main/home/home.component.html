@@ -1,3 +1,17 @@
-<pre class="mat-typography">
-  {{ user$ | async | json }}
-</pre>
+<ng-container *ngIf="user$ | async as user">
+  <mat-card class="w-[100%] max-w-[400px]">
+    <mat-card-title>
+      Welcome to
+      <span class="text-primary font-bold"
+        >Portfolio Tracker</span
+      ></mat-card-title
+    >
+    <mat-card-content>
+      <mat-card-subtitle>
+        Good Morning, {{ user?.displayName }}</mat-card-subtitle
+      >
+    </mat-card-content>
+  </mat-card>
+</ng-container>
+
+<app-table class="mt-10 block" [data]="data"></app-table>
