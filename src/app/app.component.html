@@ -1,25 +1,29 @@
-<!-- <div style="display: flex">
-  <pre> {{ TSLA$ | async | json }}</pre>
-  <pre> {{ MSFT$ | async | json }}</pre>
-  <pre> {{ V$ | async | json }}</pre>
-</div>
-<img src="https://s3.polygon.io/logos/ibm/logo.png" alt="" srcset="" /> -->
+<mat-toolbar color="primary" class="mat-elevation-z6">
+  <mat-toolbar-row>
+    <img
+      *ngIf="user$ | async as user"
+      [src]="user?.photoURL"
+      class="h-9 mr-2 rounded-full relative"
+    />
+    <span>Portfolio Tracker</span>
+    <span class="flex-auto"></span>
+    <button
+      *ngIf="isAuthenticated$ | async"
+      matTooltip="Logout"
+      matTooltipPosition="left"
+      (click)="logout()"
+    >
+      <mat-icon> logout</mat-icon>
+    </button>
+  </mat-toolbar-row>
+  <mat-progress-bar
+    *ngIf="processingAuth$ | async"
+    class="absolute"
+    mode="indeterminate"
+    color="accent"
+  ></mat-progress-bar>
+</mat-toolbar>
 
-<button
-  *ngIf="signOutLoading$ | async"
-  class="
-    btn btn-sm btn-ghost
-    loading
-    rounded-none
-    fixed
-    inset-0
-    m-auto
-    w-screen
-    h-screen
-    z-50
-    bg-base-200
-  "
->
-  loading...
-</button>
-<router-outlet></router-outlet>
+<main class="pt-4" [hidden]="processingAuth$ | async">
+  <router-outlet></router-outlet>
+</main>

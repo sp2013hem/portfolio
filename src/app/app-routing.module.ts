@@ -1,20 +1,14 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { environment } from 'src/environments/environment';
-import { CheckSignedInGuard } from './auth/guards/check-signed-in.guard';
-import { CheckSignedOutGuard } from './auth/guards/check-signed-out.guard';
 
 const routes: Routes = [
   {
     path: '',
-    loadChildren: () =>
-      import('./pages/shell.module').then((m) => m.ShellModule),
-    // canActivate: [CheckSignedInGuard],
+    loadChildren: () => import('./main/main.module').then((m) => m.MainModule),
   },
   {
     path: 'login',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
-    // canActivate: [CheckSignedOutGuard],
   },
   {
     path: '**',
@@ -26,7 +20,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      enableTracing: !environment.production,
+      enableTracing: false,
       relativeLinkResolution: 'legacy',
       paramsInheritanceStrategy: 'always',
     }),

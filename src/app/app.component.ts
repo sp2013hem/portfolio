@@ -1,23 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadCheckAuth } from './auth/store/actions/check-auth.actions';
-import { AuthState } from './auth/store/reducers/auth.reducer';
-import {
-  getAuthUser,
-  getSignOutLoading,
-} from './auth/store/selectors/auth.selectors';
+import { tap } from 'rxjs/operators';
+import { AuthActions, AuthSelectors } from './auth/store';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  user$ = this.authStore.select(getAuthUser);
-  signOutLoading$ = this.authStore.select(getSignOutLoading);
+export class AppComponent implements OnInit {
+  processingAuth$ = this.store.select(AuthSelectors.isAuthCheckProcessing);
+  user$ = this.store.select(AuthSelectors.UserInfo);
+  isAuthenticated$ = this.store.select(AuthSelectors.isAuthenticated);
+  logout() {
+    this.store.dispatch(AuthActions.logoutAction());
+  }
+  constructor(private store: Store) {}
 
-  constructor(private authStore: Store<AuthState>) {}
   ngOnInit(): void {
-    this.authStore.dispatch(loadCheckAuth());
+    this.store.dispatch(AuthActions.TriggerAuthCheckAction());
   }
 }
