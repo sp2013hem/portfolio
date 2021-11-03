@@ -1,1 +1,14 @@
-<p>app works!</p>
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span>Portfolio Tracker</span>
+    <span class="flex-auto"></span>
+    <mat-icon>login</mat-icon>
+  </mat-toolbar-row>
+  <mat-progress-bar
+    class="absolute"
+    mode="indeterminate"
+    color="accent"
+  ></mat-progress-bar>
+</mat-toolbar>
+
+<router-outlet></router-outlet>
