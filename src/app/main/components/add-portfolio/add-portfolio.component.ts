@@ -22,6 +22,7 @@ export class AddPortfolioComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: [null, [Validators.required]],
+      caption: [null],
       isMain: [null],
     });
     const $ = this.store.select(PortfolioSelectors.CreatedPortfolio).subscribe({

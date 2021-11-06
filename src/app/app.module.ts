@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { reducers, metaReducers } from './store/state';
 import { CoreModule } from './core/core.module';
 import { AuthEffects } from './auth/store';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +52,7 @@ import { AuthEffects } from './auth/store';
     MatProgressBarModule,
     AppRoutingModule,
     CoreModule,
+    SharedModule,
   ],
 })
 export class AppModule {}

@@ -14,22 +14,29 @@ import {
   withLatestFrom,
 } from 'rxjs/operators';
 import { AuthSelectors } from 'src/app/auth/store';
-import { StocksAPI } from '../services/stocks.service';
+import { PortfoliosAPI } from '../services/portfolios.service';
 import {
   CreatePortfolioFailed,
   CreatePortfolioSuccess,
+  DeletePortfolioFailed,
+  DeletePortfolioSuccess,
+  Empty,
   MyPortfoliosFailed,
   MyPortfoliosSuccess,
   RequestCreatePortfolio,
+  RequestDeletePortfolio,
   RequestMyPortfolios,
 } from './my-portfolios.actions';
+import { ConfirmModalComponent } from 'src/app/shared/components/confirm-modal/confirm-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Injectable()
 export class Effects {
   constructor(
     private snackBar: MatSnackBar,
+    public dialog: MatDialog,
     private actions$: Actions,
-    private stocks: StocksAPI,
+    private stocks: PortfoliosAPI,
     private store: Store
   ) {}
 
@@ -95,6 +102,52 @@ export class Effects {
               );
             })
           );
+      })
+    );
+  });
+
+  deletePortfolio$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(RequestDeletePortfolio),
+      withLatestFrom(
+        this.store.select(AuthSelectors.UserInfo).pipe(filter((d) => !!d))
+      ),
+      switchMap(([action, user]) => {
+        const dialogRef = this.dialog.open(ConfirmModalComponent, {
+          maxWidth: '400px',
+          autoFocus: false,
+          hasBackdrop: true,
+          disableClose: true,
+          data: {
+            title: 'Delete Portfolio',
+            message: 'Are you sure you want to delete this portfolio?',
+          },
+        });
+        return dialogRef.afterClosed().pipe(
+          switchMap((confirm) => {
+            if (confirm) {
+              return this.stocks.deletePortfolio(user.uid, action.uid).pipe(
+                map(() => {
+                  return DeletePortfolioSuccess({
+                    processingDelete: false,
+                    uid: action.uid,
+                  });
+                }),
+                catchError((err) => {
+                  this.snackBar.open(err?.error || err);
+                  return of(
+                    DeletePortfolioFailed({
+                      processingDelete: false,
+                      error: err?.error || err,
+                    })
+                  );
+                })
+              );
+            } else {
+              return of(Empty());
+            }
+          })
+        );
       })
     );
   });

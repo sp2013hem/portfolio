@@ -5,6 +5,16 @@ const portfolioFeatureSelector = createFeatureSelector<PortfolioState>(
   PORTFOLIO_FEATURE_KEY
 );
 
+export const Portfolios = createSelector(
+  portfolioFeatureSelector,
+  (state) => state.portfolios
+);
+
+export const CreatedPortfolio = createSelector(
+  portfolioFeatureSelector,
+  (state) => state.created
+);
+
 export const isAuthCheckProcessing = createSelector(
   portfolioFeatureSelector,
   (state) => state.processingPortfolios
@@ -19,12 +29,7 @@ export const processingCreatePortfolio = createSelector(
   (state) => state.processingCreatePortfolio
 );
 
-export const Portfolios = createSelector(
+export const processingDeletePortfolio = createSelector(
   portfolioFeatureSelector,
-  (state) => state.portfolios
-);
-
-export const CreatedPortfolio = createSelector(
-  portfolioFeatureSelector,
-  (state) => state.created
+  (state) => state.processingDelete
 );

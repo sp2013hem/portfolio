@@ -5,24 +5,52 @@
   </button>
 </h4>
 
-<mat-accordion *ngFor="let porfolio of portfolios">
+<mat-accordion *ngFor="let portfolio of portfolios">
   <mat-expansion-panel
     class="mb-2"
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
+    #mep
   >
     <mat-expansion-panel-header class="mat-elevation-z1 rounded-none">
       <mat-panel-title class="flex items-center pl-4">
         <mat-icon
-          *ngIf="porfolio.isMain"
+          *ngIf="portfolio.isMain"
           color="primary"
           class="absolute left-2"
           >star</mat-icon
         >
-        {{ porfolio.name }}
+        {{ portfolio.name }}
       </mat-panel-title>
+      <mat-panel-description *ngIf="portfolio.caption">
+        {{ portfolio.caption }}
+      </mat-panel-description>
     </mat-expansion-panel-header>
-    <app-table class="block" [data]="data"></app-table>
+
+    <ng-container *ngIf="mep.expanded">
+      <app-table class="block" [portfolio]="portfolio"></app-table>
+      <button
+        mat-icon-button
+        [matMenuTriggerFor]="menu"
+        class="absolute left-4 bottom-3"
+      >
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          *ngIf="!portfolio.isMain"
+          (click)="deletePortfolio(portfolio.uid)"
+        >
+          <mat-icon>delete</mat-icon>
+          <span>Delete</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>star</mat-icon>
+          <span>Mark as active</span>
+        </button>
+      </mat-menu>
+    </ng-container>
   </mat-expansion-panel>
 </mat-accordion>
 <h4 *ngIf="portfolios.length && portfolios.length < 4" class="text-right">

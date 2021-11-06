@@ -115,15 +115,6 @@ export type INTERVALS = typeof INTERVALS[number];
 
 export type PERFORMANCES = typeof PERFORMANCES[number];
 
-// export interface TickerData {
-//   open: number;
-//   high: number;
-//   low: number;
-//   close: number;
-//   volume: number;
-//   date: Date;
-// }
-
 export const FunctionTypes = [
   'OVERVIEW',
   'SYMBOL_SEARCH',
@@ -147,6 +138,7 @@ export interface TickerData {
 
 export interface Portfolio {
   name: string;
+  caption: string;
   uid: string;
   isMain: boolean;
   tickers: TickerData[];

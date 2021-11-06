@@ -28,6 +28,16 @@
   <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>
 
+<div
+  *ngIf="!dataSource.data?.length"
+  class="p-6 flex justify-items-center flex-col w-full items-center"
+>
+  <h4 class="flex my-4 text-xl">
+    Looks like it's empty! <mat-icon class="ml-1">sentiment_neutral</mat-icon>
+  </h4>
+  <button mat-raised-button color="accent">Add stocks</button>
+</div>
+
 <mat-paginator
   [pageSizeOptions]="[5, 10, 20]"
   showFirstLastButtons

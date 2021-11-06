@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home/home.component';
 import { RouterModule } from '@angular/router';
-import { StocksAPI } from './services/stocks.service';
+import { PortfoliosAPI } from './services/portfolios.service';
 import { MatCardModule } from '@angular/material/card';
 import { TableComponent } from './components/table/table.component';
 import { MatTableModule } from '@angular/material/table';
@@ -14,6 +14,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatMenuModule } from '@angular/material/menu';
 
 import {
   PortfolioEffects,
@@ -27,10 +28,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MyPortfoliosComponent } from './components/my-portfolios/my-portfolios.component';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
-  declarations: [HomeComponent, TableComponent, AddPortfolioComponent, MyPortfoliosComponent],
-  providers: [StocksAPI],
+  declarations: [
+    HomeComponent,
+    TableComponent,
+    AddPortfolioComponent,
+    MyPortfoliosComponent,
+  ],
+  providers: [PortfoliosAPI],
   imports: [
     CommonModule,
     FormsModule,
@@ -47,6 +54,7 @@ import { MyPortfoliosComponent } from './components/my-portfolios/my-portfolios.
     MatCheckboxModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    MatMenuModule,
     StoreModule.forFeature(PORTFOLIO_FEATURE_KEY, PortfolioReducer),
     EffectsModule.forFeature([PortfolioEffects]),
     RouterModule.forChild([
@@ -55,6 +63,7 @@ import { MyPortfoliosComponent } from './components/my-portfolios/my-portfolios.
         component: HomeComponent,
       },
     ]),
+    SharedModule,
   ],
 })
 export class MainModule {}

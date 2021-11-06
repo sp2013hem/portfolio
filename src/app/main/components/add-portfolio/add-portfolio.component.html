@@ -1,9 +1,13 @@
 <form [formGroup]="form" (submit)="submit()">
   <h2 mat-dialog-title>Add new portfolio</h2>
-  <mat-dialog-content>
+  <mat-dialog-content class="flex flex-col min-h-[150px] min-w-[450px]">
     <mat-form-field class="form-field" appearance="outline">
       <mat-label> Name </mat-label>
       <input matInput formControlName="name" required />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Caption</mat-label>
+      <textarea formControlName="caption" matInput></textarea>
     </mat-form-field>
     <mat-checkbox formControlName="isMain" color="primary"
       >Main Portfolio?</mat-checkbox

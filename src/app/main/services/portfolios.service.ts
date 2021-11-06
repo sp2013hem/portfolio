@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, Observable, of } from 'rxjs';
-import { delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
+import { catchError, delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
 import {
   INTERVALS,
   TICKER,
@@ -23,7 +23,7 @@ interface params {
 const DEFAULT_URL = `https://www.alphavantage.co/query?apikey=${environment.key}&`;
 
 @Injectable({ providedIn: 'root' })
-export class StocksAPI {
+export class PortfoliosAPI {
   // self = new Stocks(environment.key);
   constructor(
     private http: HttpClient,
@@ -76,7 +76,8 @@ export class StocksAPI {
           snap.docs.map((doc) => {
             return { uid: doc.id, ...(doc.data() as object) } as Portfolio;
           })
-        )
+        ),
+        catchError((err) => of(err))
       );
   }
 
@@ -90,7 +91,23 @@ export class StocksAPI {
         .collection(`/users/${uid}/portfolios`)
         .doc(this.fireStoreService.createId())
         .set(data)
-    ).pipe(mapTo(true));
+    ).pipe(
+      mapTo(true),
+      catchError((err) => of(err))
+    );
+  }
+
+  deletePortfolio(userId: string, uid: string): Observable<boolean> {
+    // return of(true).pipe(delay(2000));
+    return from(
+      this.fireStoreService
+        .collection(`/users/${userId}/portfolios`)
+        .doc(uid)
+        .delete()
+    ).pipe(
+      mapTo(true),
+      catchError((err) => of(err))
+    );
   }
   // getStockData(
   //   symbol: TICKER,
@@ -102,15 +119,15 @@ export class StocksAPI {
   //   );
   // }
 
-  // TSLA$: Observable<TickerData> = this.stocksAPI.getStockData(
+  // TSLA$: Observable<TickerData> = this.PortfoliosAPI.getStockData(
   //   'TSLA',
   //   'daily',
   //   10
   // );
-  // MSFT$: Observable<TickerData> = this.stocksAPI.getStockData(
+  // MSFT$: Observable<TickerData> = this.PortfoliosAPI.getStockData(
   //   'MSFT',
   //   'daily',
   //   10
   // );
-  // V$: Observable<TickerData> = this.stocksAPI.getStockData('V', 'daily', 10);
+  // V$: Observable<TickerData> = this.PortfoliosAPI.getStockData('V', 'daily', 10);
 }
