@@ -1,0 +1,62 @@
+<mat-stepper linear #stepper>
+  <mat-step [stepControl]="first" class="mb-5">
+    <form class="mt-4" [formGroup]="first">
+      <ng-template matStepLabel>Select your stock</ng-template>
+
+      <mat-form-field class="w-full">
+        <input
+          matInput
+          placeholder="State"
+          [matAutocomplete]="auto"
+          formControlName="ticker"
+        />
+        <mat-spinner
+          [diameter]="20"
+          class="absolute top-0 bottom-0 m-auto right-0"
+          *ngIf="processing$ | async"
+        >
+        </mat-spinner>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option
+            *ngFor="let stock of stockResults$ | async"
+            [value]="stock.ticker"
+          >
+            {{ stock.ticker }} - {{ stock.name }}
+            <!-- <div class="flex items-center justify-start">
+              <img
+                class="bg-gray-400 rounded-full w-5 h-5"
+                [src]="
+                  'https://s3.polygon.io/logos/' +
+                  (stock.ticker | lowercase) +
+                  '/logo.png'
+                "
+              />
+              <p>{{ stock.name }}<br />{{ stock.ticker }}</p>
+            </div> -->
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <div class="w-full">
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step [stepControl]="second">
+    <form class="mt-4" [formGroup]="second">
+      <ng-template matStepLabel>Bought or Sell?</ng-template>
+      <mat-form-field class="w-full">
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          formControlName="ctrl"
+          placeholder="Ex. 1 Main St, New York, NY"
+          required
+        />
+      </mat-form-field>
+      <div class="w-full">
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-raised-button>Submit</button>
+      </div>
+    </form>
+  </mat-step>
+</mat-stepper>

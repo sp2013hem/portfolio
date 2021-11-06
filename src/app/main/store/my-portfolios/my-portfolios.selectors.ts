@@ -1,8 +1,13 @@
 import { createFeatureSelector, createSelector } from '@ngrx/store';
-import { PortfolioState, PORTFOLIO_FEATURE_KEY } from './my-portfolios.reducer';
+import { MainState } from '../../main.module';
 
-const portfolioFeatureSelector = createFeatureSelector<PortfolioState>(
-  PORTFOLIO_FEATURE_KEY
+import { PORTFOLIO_FEATURE_KEY } from './my-portfolios.reducer';
+
+const featureSelector = createFeatureSelector<MainState>('main');
+
+export const portfolioFeatureSelector = createSelector(
+  featureSelector,
+  (state) => state[PORTFOLIO_FEATURE_KEY]
 );
 
 export const Portfolios = createSelector(

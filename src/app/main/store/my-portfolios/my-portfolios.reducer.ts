@@ -1,5 +1,5 @@
 import { Action, createReducer, on } from '@ngrx/store';
-import { Portfolio } from 'src/app/core/models/stocks.model';
+import { Portfolio, TickerData } from 'src/app/core/models/stocks.model';
 import {
   CreatePortfolioFailed,
   CreatePortfolioSuccess,
@@ -11,6 +11,7 @@ import {
   RequestCreatePortfolio,
   RequestDeletePortfolio,
   RequestMyPortfolios,
+
 } from './my-portfolios.actions';
 
 export const PORTFOLIO_FEATURE_KEY = 'portfolio';
@@ -54,6 +55,7 @@ export const Reducer = createReducer<PortfolioState, Action>(
     portfolios: null,
     error: action.error,
   })),
+
   on(RequestCreatePortfolio, (state) => ({
     ...state,
     processingCreatePortfolio: true,
@@ -72,6 +74,7 @@ export const Reducer = createReducer<PortfolioState, Action>(
     created: false,
     error: action.error,
   })),
+
   on(RequestDeletePortfolio, (state) => ({
     ...state,
     processingDelete: true,
@@ -89,5 +92,6 @@ export const Reducer = createReducer<PortfolioState, Action>(
     processingDelete: false,
     error: action.error,
   })),
+
   on(Empty, (state) => state)
 );

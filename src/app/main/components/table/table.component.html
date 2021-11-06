@@ -35,7 +35,9 @@
   <h4 class="flex my-4 text-xl">
     Looks like it's empty! <mat-icon class="ml-1">sentiment_neutral</mat-icon>
   </h4>
-  <button mat-raised-button color="accent">Add stocks</button>
+  <button mat-raised-button color="accent" (click)="openDialog(portfolio.uid)">
+    Add stocks
+  </button>
 </div>
 
 <mat-paginator

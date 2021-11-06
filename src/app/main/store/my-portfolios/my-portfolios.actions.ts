@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Portfolio } from 'src/app/core/models/stocks.model';
+import { Portfolio, TickerData } from 'src/app/core/models/stocks.model';
 import { type } from 'src/app/store/util.';
 
 const TYPES = {
@@ -18,6 +18,7 @@ const TYPES = {
   ),
   DELETE_PORTFOLIO_SUCCESS: type('[Porfolio Page] Delete Porfolios Succes'),
   DELETE_PORTFOLIO_FAILED: type('[Porfolio Page] Delete Porfolios Failed'),
+
   EMPTY: type('EMPTY'),
 };
 

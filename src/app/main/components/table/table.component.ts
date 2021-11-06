@@ -6,13 +6,15 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { Portfolio, TickerData } from 'src/app/core/models/stocks.model';
-import { PortfolioSelectors } from '../../store';
+import { PortfolioActions, PortfolioSelectors } from '../../store';
+import { AddTickerComponent } from '../add-ticker/add-ticker.component';
 
 @Component({
   selector: 'app-table',
@@ -20,18 +22,35 @@ import { PortfolioSelectors } from '../../store';
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
-  _$: Subscription;
+  _$: Record<string, Subscription> = {};
   dataSource;
   displayedColumns: string[] = ['ticker', 'value', 'position', 'pl', 'totalPL'];
   @Input() portfolio: Portfolio;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private store: Store) {}
-
+  constructor(public dialog: MatDialog, private store: Store) {}
+  openDialog(uid: string) {
+    const ref = this.dialog.open(AddTickerComponent, {
+      autoFocus: false,
+      hasBackdrop: true,
+      disableClose: true,
+      minWidth: '90%',
+      maxWidth: '500px',
+      minHeight: '500px',
+      data: uid,
+    });
+    this._$.dialogRef?.unsubscribe();
+    this._$.dialogRef = ref
+      .afterClosed()
+      .pipe(filter((d) => !!d))
+      .subscribe({
+        next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
+      });
+  }
   ngOnInit() {
     this.dataSource = new MatTableDataSource<TickerData>([]);
-    this._$ = this.store
+    this._$.select = this.store
       .select(PortfolioSelectors.Portfolios)
       .pipe(
         map((portfolios) =>
@@ -58,6 +77,6 @@ export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
     this.dataSource.paginator = this.paginator;
   }
   ngOnDestroy() {
-    this._$?.unsubscribe();
+    this._$.forEach((value) => value?.unsubscribe());
   }
 }
