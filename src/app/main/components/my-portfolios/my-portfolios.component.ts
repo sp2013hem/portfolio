@@ -13,6 +13,7 @@ import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component'
 })
 export class MyPortfoliosComponent implements OnDestroy {
   dialogRef;
+  progress = 0;
   @Input() portfolios: Portfolio[];
 
   openDialog() {
@@ -25,10 +26,15 @@ export class MyPortfoliosComponent implements OnDestroy {
         next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
       });
   }
-  deletePortfolio(uid: string) {
-    this.store.dispatch(PortfolioActions.RequestDeletePortfolio({ uid: uid }));
+  deletePortfolio(e, uid: string) {
+    this.progress = e / 10;
+    if (this.progress > 100) {
+      this.store.dispatch(
+        PortfolioActions.RequestDeletePortfolio({ uid: uid })
+      );
+    }
   }
-  
+
   constructor(public dialog: MatDialog, private store: Store) {}
 
   ngOnDestroy() {

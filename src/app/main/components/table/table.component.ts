@@ -60,7 +60,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
       .subscribe(
         (portfolio) =>
           (this.dataSource.data =
-            portfolio.tickers ||
+            portfolio?.tickers ||
             [
               // {
               //   ticker: 'V',

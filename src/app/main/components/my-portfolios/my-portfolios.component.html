@@ -40,10 +40,15 @@
         <button
           mat-menu-item
           *ngIf="!portfolio.isMain"
-          (click)="deletePortfolio(portfolio.uid)"
+          appHoldable
+          (holdTime)="deletePortfolio($event, portfolio.uid)"
         >
-          <mat-icon>delete</mat-icon>
-          <span>Delete</span>
+          <span
+            class="absolute top-0 left-0 bg-yellow-500 h-full"
+            [style.width.%]="progress"
+          ></span>
+          <mat-icon class="relative z-10">delete</mat-icon>
+          <span class="relative z-10">Delete</span>
         </button>
         <button mat-menu-item>
           <mat-icon>star</mat-icon>

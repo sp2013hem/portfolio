@@ -113,43 +113,24 @@ export class Effects {
         this.store.select(AuthSelectors.UserInfo).pipe(filter((d) => !!d))
       ),
       switchMap(([action, user]) => {
-        const dialogRef = this.dialog.open(ConfirmModalComponent, {
-          maxWidth: '400px',
-          autoFocus: false,
-          hasBackdrop: true,
-          disableClose: true,
-          data: {
-            title: 'Delete Portfolio',
-            message: 'Are you sure you want to delete this portfolio?',
-          },
-        });
-        return dialogRef.afterClosed().pipe(
-          switchMap((confirm) => {
-            if (confirm) {
-              return this.stocks.deletePortfolio(user.uid, action.uid).pipe(
-                map(() => {
-                  return DeletePortfolioSuccess({
-                    processingDelete: false,
-                    uid: action.uid,
-                  });
-                }),
-                catchError((err) => {
-                  this.snackBar.open(err?.error || err);
-                  return of(
-                    DeletePortfolioFailed({
-                      processingDelete: false,
-                      error: err?.error || err,
-                    })
-                  );
-                })
-              );
-            } else {
-              return of(Empty());
-            }
+        return this.stocks.deletePortfolio(user.uid, action.uid).pipe(
+          map(() => {
+            return DeletePortfolioSuccess({
+              processingDelete: false,
+              uid: action.uid,
+            });
+          }),
+          catchError((err) => {
+            this.snackBar.open(err?.error || err);
+            return of(
+              DeletePortfolioFailed({
+                processingDelete: false,
+                error: err?.error || err,
+              })
+            );
           })
         );
       })
     );
   });
-
 }

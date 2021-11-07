@@ -5,11 +5,12 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { FormsModule } from '@angular/forms';
 import { ConfirmModalComponent } from './components/confirm-modal/confirm-modal.component';
+import { HoldableDirective } from './directive/holdable.directive';
 
 @NgModule({
-  declarations: [ConfirmModalComponent],
+  declarations: [ConfirmModalComponent, HoldableDirective],
   entryComponents: [ConfirmModalComponent],
-  exports: [ConfirmModalComponent],
+  exports: [ConfirmModalComponent, HoldableDirective],
   imports: [CommonModule, FormsModule, MatDialogModule, MatButtonModule],
 })
 export class SharedModule {}
