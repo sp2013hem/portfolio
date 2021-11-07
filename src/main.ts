@@ -7,6 +7,7 @@ import { environment } from './environments/environment';
 if (environment.production) {
   enableProdMode();
 }
+
 declare global {
   interface Object {
     forEach: (arg1?: any, arg2?: any) => any;
