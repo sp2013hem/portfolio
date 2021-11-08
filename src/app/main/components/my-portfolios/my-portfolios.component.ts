@@ -1,10 +1,12 @@
 import { Component, Input, OnDestroy } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Portfolio } from 'src/app/core/models/stocks.model';
 import { PortfolioActions } from '../../store';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
+import { AddTickerComponent } from '../add-ticker/add-ticker.component';
 
 @Component({
   selector: 'app-my-portfolios',
@@ -12,14 +14,32 @@ import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component'
   styleUrls: ['./my-portfolios.component.scss'],
 })
 export class MyPortfoliosComponent implements OnDestroy {
-  dialogRef;
+  _$: Record<string, Subscription> = {};
   progress = 0;
   @Input() portfolios: Portfolio[];
 
   openDialog() {
     const ref = this.dialog.open(AddPortfolioComponent);
-    this.dialogRef?.unsubscribe();
-    this.dialogRef = ref
+    this._$.dialogRef?.unsubscribe();
+    this._$.dialogRef = ref
+      .afterClosed()
+      .pipe(filter((d) => !!d))
+      .subscribe({
+        next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
+      });
+  }
+  openTickerDialog(uid: string) {
+    const ref = this.dialog.open(AddTickerComponent, {
+      autoFocus: false,
+      hasBackdrop: true,
+      disableClose: false,
+      minWidth: '100%',
+      maxWidth: '600px',
+      minHeight: '500px',
+      data: uid,
+    });
+    this._$.dialogTickerRef?.unsubscribe();
+    this._$.dialogTickerRef = ref
       .afterClosed()
       .pipe(filter((d) => !!d))
       .subscribe({
@@ -38,6 +58,6 @@ export class MyPortfoliosComponent implements OnDestroy {
   constructor(public dialog: MatDialog, private store: Store) {}
 
   ngOnDestroy() {
-    this.dialogRef?.unsubscribe();
+    this._$.forEach((value) => value?.unsubscribe());
   }
 }

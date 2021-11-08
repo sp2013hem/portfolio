@@ -82,12 +82,12 @@ html {
   @include mat.all-component-themes($portfolio-tracker-theme);
 }
 
-// @media (prefers-color-scheme: dark) {
-//   html {
-//     background: #1b1e1b;
-//     @include mat.all-component-themes($portfolio-tracker-dark-theme);
-//   }
-// }
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #1b1e1b;
+    @include mat.all-component-themes($portfolio-tracker-dark-theme);
+  }
+}
 
 @import "tailwindcss/base";
 @import "tailwindcss/components";
@@ -109,4 +109,14 @@ html {
   border: 2px solid #cbf9db;
   border-top-color: #1b1e1b;
   animation: spinner 0.8s linear infinite;
+}
+
+.mat-dialog-container {
+  padding: 4px 16px !important;
+}
+.mat-horizontal-content-container {
+  padding: 0 8px 24px 8px !important;
+}
+.mat-horizontal-stepper-header {
+  padding: 0 6px !important;
 }

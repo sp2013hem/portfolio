@@ -37,6 +37,7 @@ export class StocksAPI {
       map((data) =>
         data.bestMatches
           .sort((d) => +d['9. matchScore'])
+          .filter((d) => +d['9. matchScore'] > 0.5)
           .map((d) => ({
             ticker: d['1. symbol'],
             name: d['2. name'],

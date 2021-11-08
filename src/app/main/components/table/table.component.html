@@ -35,7 +35,11 @@
   <h4 class="flex my-4 text-xl">
     Looks like it's empty! <mat-icon class="ml-1">sentiment_neutral</mat-icon>
   </h4>
-  <button mat-raised-button color="accent" (click)="openDialog(portfolio.uid)">
+  <button
+    mat-raised-button
+    color="accent"
+    (click)="openTicker.emit(portfolio.uid)"
+  >
     Add stocks
   </button>
 </div>

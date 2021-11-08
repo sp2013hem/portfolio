@@ -1,20 +1,20 @@
 import {
   AfterViewInit,
   Component,
+  EventEmitter,
   Input,
   OnDestroy,
   OnInit,
+  Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { Portfolio, TickerData } from 'src/app/core/models/stocks.model';
-import { PortfolioActions, PortfolioSelectors } from '../../store';
-import { AddTickerComponent } from '../add-ticker/add-ticker.component';
+import { PortfolioSelectors } from '../../store';
 
 @Component({
   selector: 'app-table',
@@ -26,28 +26,12 @@ export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
   dataSource;
   displayedColumns: string[] = ['ticker', 'value', 'position', 'pl', 'totalPL'];
   @Input() portfolio: Portfolio;
+  @Output() openTicker: EventEmitter<String> = new EventEmitter<String>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(public dialog: MatDialog, private store: Store) {}
-  openDialog(uid: string) {
-    const ref = this.dialog.open(AddTickerComponent, {
-      autoFocus: false,
-      hasBackdrop: true,
-      disableClose: true,
-      minWidth: '90%',
-      maxWidth: '500px',
-      minHeight: '500px',
-      data: uid,
-    });
-    this._$.dialogRef?.unsubscribe();
-    this._$.dialogRef = ref
-      .afterClosed()
-      .pipe(filter((d) => !!d))
-      .subscribe({
-        next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
-      });
-  }
+  constructor(private store: Store) {}
+
   ngOnInit() {
     this.dataSource = new MatTableDataSource<TickerData>([]);
     this._$.select = this.store

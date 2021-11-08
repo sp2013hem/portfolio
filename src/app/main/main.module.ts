@@ -17,6 +17,10 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import {
   PortfolioEffects,
@@ -32,12 +36,12 @@ import { ActionReducerMap, StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
 import { AddPortfolioComponent } from './components/add-portfolio/add-portfolio.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MyPortfoliosComponent } from './components/my-portfolios/my-portfolios.component';
 import { SharedModule } from '../shared/shared.module';
 import { AddTickerComponent } from './components/add-ticker/add-ticker.component';
 import { StocksAPI } from './services/stocks.service';
+import { MatNativeDateModule } from '@angular/material/core';
+import { EntriesAPI } from './services/entries.service';
 
 export interface MainState {
   [STOCKS_FEATURE_KEY]: StocksState;
@@ -57,7 +61,7 @@ export const reducers: ActionReducerMap<MainState> = {
     MyPortfoliosComponent,
     AddTickerComponent,
   ],
-  providers: [PortfoliosAPI, StocksAPI],
+  providers: [PortfoliosAPI, StocksAPI,EntriesAPI],
   imports: [
     CommonModule,
     FormsModule,
@@ -72,11 +76,14 @@ export const reducers: ActionReducerMap<MainState> = {
     MatSnackBarModule,
     MatDialogModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
     MatIconModule,
     MatProgressSpinnerModule,
     MatMenuModule,
     MatStepperModule,
     MatAutocompleteModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
     StoreModule.forFeature('main', reducers),
     EffectsModule.forFeature([PortfolioEffects, StocksEffects]),
     RouterModule.forChild([

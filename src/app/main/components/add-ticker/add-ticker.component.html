@@ -1,12 +1,11 @@
 <mat-stepper linear #stepper>
   <mat-step [stepControl]="first" class="mb-5">
-    <form class="mt-4" [formGroup]="first">
+    <form autocomplete="off" class="mt-4" [formGroup]="first">
       <ng-template matStepLabel>Select your stock</ng-template>
-
       <mat-form-field class="w-full">
         <input
           matInput
-          placeholder="State"
+          placeholder="Search for ticker"
           [matAutocomplete]="auto"
           formControlName="ticker"
         />
@@ -20,42 +19,75 @@
           <mat-option
             *ngFor="let stock of stockResults$ | async"
             [value]="stock.ticker"
+            (click)="stepper.next()"
           >
             {{ stock.ticker }} - {{ stock.name }}
-            <!-- <div class="flex items-center justify-start">
-              <img
-                class="bg-gray-400 rounded-full w-5 h-5"
-                [src]="
-                  'https://s3.polygon.io/logos/' +
-                  (stock.ticker | lowercase) +
-                  '/logo.png'
-                "
-              />
-              <p>{{ stock.name }}<br />{{ stock.ticker }}</p>
-            </div> -->
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>
-      <div class="w-full">
-        <button mat-button matStepperNext>Next</button>
-      </div>
     </form>
   </mat-step>
   <mat-step [stepControl]="second">
-    <form class="mt-4" [formGroup]="second">
-      <ng-template matStepLabel>Bought or Sell?</ng-template>
+    <form
+      autocomplete="off"
+      class="mt-4"
+      [formGroup]="second"
+      (submit)="submit()"
+    >
+      <ng-template matStepLabel>Add Entry</ng-template>
+      <mat-button-toggle-group
+        class="mb-5"
+        (change)="buyOrSell = buyOrSell === 'BUY' ? 'SELL' : 'BUY'"
+        [value]="buyOrSell"
+      >
+        <mat-button-toggle value="BUY">Buy</mat-button-toggle>
+        <mat-button-toggle value="SELL">Sell</mat-button-toggle>
+      </mat-button-toggle-group>
+
       <mat-form-field class="w-full">
-        <mat-label>Address</mat-label>
+        <mat-label>Choose a date</mat-label>
         <input
           matInput
-          formControlName="ctrl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
+          [matDatepicker]="picker"
+          formControlName="date"
+          (click)="picker.open()"
         />
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
-      <div class="w-full">
+
+      <mat-form-field class="w-full">
+        <mat-label>Price per unit</mat-label>
+        <input matInput formControlName="price" type="number" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label
+          >Quantity {{ buyOrSell === "BUY" ? "bought" : "sold" }}
+        </mat-label>
+        <input matInput formControlName="quantity" type="number" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Transaction/Broker fee</mat-label>
+        <input matInput formControlName="fees" type="number" />
+      </mat-form-field>
+
+      <mat-form-field class="w-full">
+        <mat-label>Currencies</mat-label>
+        <select matNativeControl formControlName="currency">
+          <option
+            [value]="currency.key"
+            *ngFor="let currency of currencies | keyvalue"
+          >
+            {{ currency.key }} - {{ currency.value.symbol }}
+          </option>
+        </select>
+      </mat-form-field>
+
+      <div class="w-full flex justify-end">
         <button mat-button matStepperPrevious>Back</button>
-        <button mat-raised-button>Submit</button>
+        <button mat-raised-button color="primary">Submit</button>
       </div>
     </form>
   </mat-step>

@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, Observable, of } from 'rxjs';
 import { catchError, delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
-import { Portfolio } from 'src/app/core/models/stocks.model';
+import { EntryPayload, Portfolio } from 'src/app/core/models/stocks.model';
 import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class PortfoliosAPI {
+export class EntriesAPI {
   constructor(private fireStoreService: AngularFirestore) {}
 
   getPortfolios(uid: string): Observable<Portfolio[]> {
@@ -43,14 +43,15 @@ export class PortfoliosAPI {
       );
   }
 
-  createPortfolio(
-    data: { name: string; isMain: boolean },
-    uid: string
+  createEntry(
+    data: EntryPayload,
+    uid: string,
+    pid: string
   ): Observable<boolean> {
     // return of(true).pipe(delay(2000));
     return from(
       this.fireStoreService
-        .collection(`/users/${uid}/portfolios`)
+        .collection(`/users/${uid}/portfolios/${pid}/entries`)
         .doc(this.fireStoreService.createId())
         .set(data)
     ).pipe(
