@@ -1,21 +1,11 @@
-import { Component, Inject, OnInit, Optional } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
-import { debounceTime, map, startWith, switchMap, tap } from 'rxjs/operators';
-import {
-  CurrencyMap,
-  EntryPayload,
-  TickerSearchResult,
-} from 'src/app/core/models/stocks.model';
-import { EntriesAPI } from '../../services/entries.service';
-import {
-  PortfolioActions,
-  PortfolioSelectors,
-  StocksActions,
-  StocksSelectors,
-} from '../../store';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { CurrencyMap, EntryPayload } from 'src/app/core/models/stocks.model';
+import { StocksActions, StocksSelectors } from '../../store';
 
 type BuyorSell = 'BUY' | 'SELL';
 
@@ -40,16 +30,13 @@ export class AddTickerComponent implements OnInit {
         ...this.first.value,
         ...this.second.value,
       };
-      this._$.submit = this.api
-        .createEntry(payload, '4EZJvi86mNOB2VIdIjtiHWHLpcb2', this.uid)
-        .subscribe({ next: () => this.dialogRef.close() });
+      this.dialogRef.close(payload);
     }
   }
   constructor(
     private formBuilder: FormBuilder,
     private store: Store,
-    private api: EntriesAPI,
-    @Inject(MAT_DIALOG_DATA) public uid: string,
+    @Inject(MAT_DIALOG_DATA) public pid: string,
     public dialogRef?: MatDialogRef<AddTickerComponent>
   ) {}
   ngOnInit() {

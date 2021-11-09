@@ -23,6 +23,10 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import {
+  EntriesEffects,
+  EntriesReducer,
+  EntriesState,
+  ENTRIES_FEATURE_KEY,
   PortfolioEffects,
   PortfolioReducer,
   PortfolioState,
@@ -46,11 +50,13 @@ import { EntriesAPI } from './services/entries.service';
 export interface MainState {
   [STOCKS_FEATURE_KEY]: StocksState;
   [PORTFOLIO_FEATURE_KEY]: PortfolioState;
+  [ENTRIES_FEATURE_KEY]: EntriesState;
 }
 
 export const reducers: ActionReducerMap<MainState> = {
   [STOCKS_FEATURE_KEY]: StocksReducer,
   [PORTFOLIO_FEATURE_KEY]: PortfolioReducer,
+  [ENTRIES_FEATURE_KEY]: EntriesReducer,
 };
 
 @NgModule({
@@ -61,7 +67,7 @@ export const reducers: ActionReducerMap<MainState> = {
     MyPortfoliosComponent,
     AddTickerComponent,
   ],
-  providers: [PortfoliosAPI, StocksAPI,EntriesAPI],
+  providers: [PortfoliosAPI, StocksAPI, EntriesAPI],
   imports: [
     CommonModule,
     FormsModule,
@@ -85,7 +91,7 @@ export const reducers: ActionReducerMap<MainState> = {
     MatDatepickerModule,
     MatNativeDateModule,
     StoreModule.forFeature('main', reducers),
-    EffectsModule.forFeature([PortfolioEffects, StocksEffects]),
+    EffectsModule.forFeature([PortfolioEffects, StocksEffects, EntriesEffects]),
     RouterModule.forChild([
       {
         path: '',

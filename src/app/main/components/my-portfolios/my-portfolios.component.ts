@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Portfolio } from 'src/app/core/models/stocks.model';
-import { PortfolioActions } from '../../store';
+import { EntriesActions, PortfolioActions } from '../../store';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
 import { AddTickerComponent } from '../add-ticker/add-ticker.component';
 
@@ -19,7 +19,14 @@ export class MyPortfoliosComponent implements OnDestroy {
   @Input() portfolios: Portfolio[];
 
   openDialog() {
-    const ref = this.dialog.open(AddPortfolioComponent);
+    const ref = this.dialog.open(AddPortfolioComponent, {
+      autoFocus: false,
+      hasBackdrop: true,
+      disableClose: false,
+      minWidth: '100%',
+      maxWidth: '600px',
+      minHeight: '350px',
+    });
     this._$.dialogRef?.unsubscribe();
     this._$.dialogRef = ref
       .afterClosed()
@@ -43,7 +50,10 @@ export class MyPortfoliosComponent implements OnDestroy {
       .afterClosed()
       .pipe(filter((d) => !!d))
       .subscribe({
-        next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
+        next: (payload) =>
+          this.store.dispatch(
+            EntriesActions.EntriesCreatedRequested({ payload, pid: uid })
+          ),
       });
   }
   deletePortfolio(e, uid: string) {

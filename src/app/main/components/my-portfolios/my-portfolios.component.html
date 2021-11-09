@@ -1,4 +1,7 @@
-<h4 *ngIf="!portfolios.length" class="text-center">
+<h4
+  *ngIf="!portfolios.length"
+  class="text-center mat-card mat-elevation-z2 p-8"
+>
   Looks like there are no Portfolios!<br />
   <button class="mt-3" mat-raised-button color="primary" (click)="openDialog()">
     Add one

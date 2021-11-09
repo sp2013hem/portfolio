@@ -16,6 +16,15 @@ import {
 } from './stocks/stocks.reducer';
 import { Effects as StocksEffects } from './stocks/stocks.effects';
 
+import * as EntriesActions from './entries/entries.actions';
+import * as EntriesSelectors from './entries/entries.selectors';
+import {
+  Reducer as EntriesReducer,
+  ENTRIES_FEATURE_KEY,
+  EntriesState,
+} from './entries/entries.reducer';
+import { Effects as EntriesEffects } from './entries/entries.effects';
+
 export {
   PortfolioActions,
   PortfolioSelectors,
@@ -29,4 +38,10 @@ export {
   StocksState,
   StocksEffects,
   StocksReducer,
+  EntriesActions,
+  EntriesSelectors,
+  ENTRIES_FEATURE_KEY,
+  EntriesState,
+  EntriesEffects,
+  EntriesReducer,
 };
