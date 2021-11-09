@@ -7,9 +7,12 @@ import {
   EntriesCreatedFailed,
   EntriesCreatedRequested,
   EntriesCreatedSuccess,
+  GetEntriesFailed,
+  GetEntriesRequest,
+  GetEntriesSuccess,
 } from './entries.actions';
 
-import { of } from 'rxjs';
+import { of, zip } from 'rxjs';
 import {
   catchError,
   filter,
@@ -33,6 +36,7 @@ export class Effects {
     private snackBar: MatSnackBar,
     public dialog: MatDialog,
     private actions$: Actions,
+    private stocks: StocksAPI,
     private entries: EntriesAPI,
     private store: Store
   ) {}
@@ -45,14 +49,15 @@ export class Effects {
       ),
       switchMap((action) => {
         return this.entries
-          .createEntry(action[0].payload, action[1].uid, action[0].pid)
+          .create(action[0].payload, action[1].uid, action[0].pid)
           .pipe(
-            map((entries) => {
-              return EntriesCreatedSuccess({
+            mergeMap(() => [
+              EntriesCreatedSuccess({
                 processingAddEntry: false,
                 created: true,
-              });
-            }),
+              }),
+              GetEntriesRequest({ pid: action[0].pid }),
+            ]),
             catchError((err) => {
               this.snackBar.open(err?.error || err);
               return of(
@@ -64,6 +69,56 @@ export class Effects {
               );
             })
           );
+      })
+    );
+  });
+
+  entries$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(GetEntriesRequest),
+      withLatestFrom(
+        this.store.select(AuthSelectors.UserInfo).pipe(filter((d) => !!d))
+      ),
+      switchMap((action) => {
+        return this.entries.get(action[1].uid, action[0].pid).pipe(
+          switchMap((entries) => {
+            if (!entries.length) {
+              return of(
+                GetEntriesSuccess({
+                  processingEntries: false,
+                  entries: [],
+                  getError: null,
+                })
+              );
+            }
+            return zip(
+              ...entries.map((entry) => this.stocks.getQuote(entry.ticker))
+            ).pipe(
+              map((data) => {
+                const mergeEntries = entries
+                  .map((entry) => {
+                    const d = data.find((d) => d.ticker === entry.ticker);
+                    return d ? { ...d, ...entry } : null;
+                  })
+                  .filter((d) => !!d);
+                return GetEntriesSuccess({
+                  processingEntries: false,
+                  entries: mergeEntries,
+                  getError: null,
+                });
+              })
+            );
+          }),
+          catchError((err) => {
+            this.snackBar.open(err?.error || err);
+            return of(
+              GetEntriesFailed({
+                processingEntries: false,
+                getError: err?.error || err,
+              })
+            );
+          })
+        );
       })
     );
   });

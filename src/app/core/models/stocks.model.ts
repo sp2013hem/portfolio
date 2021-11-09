@@ -482,6 +482,7 @@ export const FunctionTypes = [
   'SYMBOL_SEARCH',
   'TIME_SERIES_INTRADAY',
   'TIME_SERIES_DAILY',
+  'GLOBAL_QUOTE',
 ] as const;
 
 export interface TickerSearchResult {
@@ -511,16 +512,33 @@ export interface Portfolio {
   caption: string;
   uid: string;
   isMain: boolean;
-  tickers?: TickerData[];
 }
 
-export interface Entry {
+export interface Quote {
+  ticker: string;
+  open: number;
+  high: number;
+  low: number;
+  currentPrice: number;
+  volume: number;
+  prevClose: number;
+  change: number;
+  changePercent: number;
+}
+
+export type BuyorSell = 'BUY' | 'SELL';
+export interface Entry extends Partial<Quote> {
   ticker: string;
   date: Date;
   uid: string;
+  type: BuyorSell;
   price: number;
   quantity: number;
   fees: number;
+  open?: number;
+  high?: number;
+  low?: number;
+  close?: number;
   currency: keyof typeof CurrencyMap;
 }
 

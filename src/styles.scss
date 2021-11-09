@@ -120,3 +120,27 @@ html {
 .mat-horizontal-stepper-header {
   padding: 0 6px !important;
 }
+
+@media screen and (min-width: 1280px) {
+  main {
+    max-width: 1024px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1440px) {
+  main {
+    max-width: 1024px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}
+
+@media screen and (min-width: 1920px) {
+  main {
+    max-width: 1440px;
+    margin: 0 auto;
+    width: 100%;
+  }
+}

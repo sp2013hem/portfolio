@@ -12,9 +12,9 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { Portfolio, TickerData } from 'src/app/core/models/stocks.model';
-import { PortfolioSelectors } from '../../store';
+import { EntriesSelectors, PortfolioSelectors } from '../../store';
 
 @Component({
   selector: 'app-table',
@@ -24,11 +24,22 @@ import { PortfolioSelectors } from '../../store';
 export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
   _$: Record<string, Subscription> = {};
   dataSource;
-  displayedColumns: string[] = ['ticker', 'value', 'position', 'pl', 'totalPL'];
+  displayedColumns: string[] = ['ticker', 'currentPrice', 'quantity', 'price'];
   @Input() portfolio: Portfolio;
   @Output() openTicker: EventEmitter<String> = new EventEmitter<String>();
-
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  processingEntries$ = this.store.select(EntriesSelectors.processingEntries);
+  // .pipe(
+  //   tap((data) => {
+  //     debugger;
+  //   })
+  // );
+  entries$ = this.store.select(EntriesSelectors.entries).pipe(
+    tap((data) => {
+      this.dataSource.data = data;
+    })
+  );
 
   constructor(private store: Store) {}
 
@@ -41,20 +52,7 @@ export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
           portfolios.find((e) => e.uid === this.portfolio.uid)
         )
       )
-      .subscribe(
-        (portfolio) =>
-          (this.dataSource.data =
-            portfolio?.tickers ||
-            [
-              // {
-              //   ticker: 'V',
-              //   value: 235.4,
-              //   position: 1,
-              //   pl: 1.0079,
-              //   totalPL: 1.0079,
-              // },
-            ])
-      );
+      .subscribe(() => (this.dataSource.data = []));
   }
 
   ngAfterViewInit() {

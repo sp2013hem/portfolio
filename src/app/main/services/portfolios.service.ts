@@ -3,7 +3,6 @@ import { AngularFirestore } from '@angular/fire/compat/firestore';
 import { from, Observable, of } from 'rxjs';
 import { catchError, delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
 import { Portfolio } from 'src/app/core/models/stocks.model';
-import { environment } from 'src/environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class PortfoliosAPI {

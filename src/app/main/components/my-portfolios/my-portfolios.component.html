@@ -13,7 +13,7 @@
     class="mb-2"
     (opened)="panelOpenState = true"
     (closed)="panelOpenState = false"
-    [expanded]="portfolio.isMain"
+    (afterExpand)="onPortFolioExpanded(portfolio.uid)"
     #mep
   >
     <mat-expansion-panel-header class="mat-elevation-z1 rounded-none">

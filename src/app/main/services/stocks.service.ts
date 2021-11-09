@@ -1,14 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AngularFirestore } from '@angular/fire/compat/firestore';
-import { from, Observable, of } from 'rxjs';
-import { catchError, delay, map, mapTo, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import {
   INTERVALS,
   TICKER,
   TickerData,
   FunctionTypes,
   TickerSearchResult,
+  Quote,
 } from 'src/app/core/models/stocks.model';
 import { environment } from 'src/environments/environment';
 
@@ -24,10 +24,10 @@ const DEFAULT_URL = `https://www.alphavantage.co/query?apikey=${environment.key}
 
 @Injectable({ providedIn: 'root' })
 export class StocksAPI {
-  constructor(
-    private http: HttpClient,
-    private fireStoreService: AngularFirestore
-  ) {}
+  cache = {
+    GLOBAL_QUOTE: {},
+  };
+  constructor(private http: HttpClient) {}
   getCompanyInfo(symbol = 'IBM') {
     return this.request({ function: 'OVERVIEW', symbol });
   }
@@ -49,7 +49,33 @@ export class StocksAPI {
     );
   }
 
-  getStockData(symbol = 'IBM'): Observable<TickerData[]> {
+  getQuote(symbol): Observable<Quote> {
+    if (!!this.cache.GLOBAL_QUOTE[symbol]) {
+      return of(this.cache.GLOBAL_QUOTE[symbol]);
+    }
+    return this.request({
+      function: 'GLOBAL_QUOTE',
+      symbol,
+    }).pipe(
+      map((data) => {
+        const t = {
+          ticker: data['Global Quote']['01. symbol'],
+          open: +data['Global Quote']['02. open'],
+          high: +data['Global Quote']['03. high'],
+          low: +data['Global Quote']['04. low'],
+          currentPrice: +data['Global Quote']['05. price'],
+          volume: +data['Global Quote']['06. volume'],
+          prevClose: +data['Global Quote']['08. previous close'],
+          change: +data['Global Quote']['09. change'],
+          changePercent: parseFloat(data['Global Quote']['10. change percent']),
+        };
+        this.cache.GLOBAL_QUOTE[symbol] = t;
+        return t as Quote;
+      })
+    );
+  }
+
+  getStockData(symbol): Observable<TickerData[]> {
     return this.request({
       function: 'TIME_SERIES_DAILY',
       amount: 10,

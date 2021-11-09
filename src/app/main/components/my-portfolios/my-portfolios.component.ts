@@ -18,6 +18,9 @@ export class MyPortfoliosComponent implements OnDestroy {
   progress = 0;
   @Input() portfolios: Portfolio[];
 
+  onPortFolioExpanded(pid) {
+    this.store.dispatch(EntriesActions.GetEntriesRequest({ pid }));
+  }
   openDialog() {
     const ref = this.dialog.open(AddPortfolioComponent, {
       autoFocus: false,

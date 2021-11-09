@@ -4,10 +4,12 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
-import { CurrencyMap, EntryPayload } from 'src/app/core/models/stocks.model';
+import {
+  BuyorSell,
+  CurrencyMap,
+  EntryPayload,
+} from 'src/app/core/models/stocks.model';
 import { StocksActions, StocksSelectors } from '../../store';
-
-type BuyorSell = 'BUY' | 'SELL';
 
 @Component({
   selector: 'app-add-ticker',
@@ -29,6 +31,7 @@ export class AddTickerComponent implements OnInit {
       const payload: EntryPayload = {
         ...this.first.value,
         ...this.second.value,
+        type: this.buyOrSell,
       };
       this.dialogRef.close(payload);
     }

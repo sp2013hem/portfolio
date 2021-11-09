@@ -10,12 +10,22 @@ export const entriesFeatureSelector = createSelector(
   (state) => state[ENTRIES_FEATURE_KEY]
 );
 
-export const entries = createSelector(
+export const entryCreated = createSelector(
   entriesFeatureSelector,
   (state) => state.created
+);
+
+export const entries = createSelector(
+  entriesFeatureSelector,
+  (state) => state.entries
 );
 
 export const searchProcessing = createSelector(
   entriesFeatureSelector,
   (state) => state.processingAddEntry
+);
+
+export const processingEntries = createSelector(
+  entriesFeatureSelector,
+  (state) => state.processingEntries
 );

@@ -46,6 +46,8 @@ import { AddTickerComponent } from './components/add-ticker/add-ticker.component
 import { StocksAPI } from './services/stocks.service';
 import { MatNativeDateModule } from '@angular/material/core';
 import { EntriesAPI } from './services/entries.service';
+import { CalcTickerWorthPipe } from './pipes/calc-ticker-worth.pipe';
+import { GetCurrencyPipe } from './pipes/get-currency.pipe';
 
 export interface MainState {
   [STOCKS_FEATURE_KEY]: StocksState;
@@ -66,6 +68,8 @@ export const reducers: ActionReducerMap<MainState> = {
     AddPortfolioComponent,
     MyPortfoliosComponent,
     AddTickerComponent,
+    CalcTickerWorthPipe,
+    GetCurrencyPipe,
   ],
   providers: [PortfoliosAPI, StocksAPI, EntriesAPI],
   imports: [
