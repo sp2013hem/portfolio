@@ -24,22 +24,15 @@ import { EntriesSelectors, PortfolioSelectors } from '../../store';
 export class TableComponent implements AfterViewInit, OnInit, OnDestroy {
   _$: Record<string, Subscription> = {};
   dataSource;
-  displayedColumns: string[] = ['ticker', 'currentPrice', 'quantity', 'price'];
+  displayedColumns: string[] = ['ticker', 'quantity', 'price'];
   @Input() portfolio: Portfolio;
   @Output() openTicker: EventEmitter<String> = new EventEmitter<String>();
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   processingEntries$ = this.store.select(EntriesSelectors.processingEntries);
-  // .pipe(
-  //   tap((data) => {
-  //     debugger;
-  //   })
-  // );
-  entries$ = this.store.select(EntriesSelectors.entries).pipe(
-    tap((data) => {
-      this.dataSource.data = data;
-    })
-  );
+  entries$ = this.store
+    .select(EntriesSelectors.entries)
+    .pipe(tap((data) => (this.dataSource.data = data)));
 
   constructor(private store: Store) {}
 

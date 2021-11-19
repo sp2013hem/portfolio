@@ -92,7 +92,9 @@ export class Effects {
               );
             }
             return zip(
-              ...entries.map((entry) => this.stocks.getQuote(entry.ticker))
+              ...[...new Set(entries.map((entry) => entry.ticker))].map(
+                (ticker) => this.stocks.getQuote(ticker)
+              )
             ).pipe(
               map((data) => {
                 const mergeEntries = entries

@@ -11,7 +11,7 @@ import {
   Quote,
 } from 'src/app/core/models/stocks.model';
 import { environment } from 'src/environments/environment';
-
+let key = environment.key;
 interface params {
   function: typeof FunctionTypes[number];
   symbol?: TICKER;
@@ -20,7 +20,7 @@ interface params {
   interval?: INTERVALS;
 }
 
-const DEFAULT_URL = `https://www.alphavantage.co/query?apikey=${environment.key}&`;
+const DEFAULT_URL = `https://www.alphavantage.co/query`;
 
 @Injectable({ providedIn: 'root' })
 export class StocksAPI {
@@ -92,8 +92,10 @@ export class StocksAPI {
   }
 
   request(params: params): Observable<any> {
+    key = environment.key === key ? environment.key2 : environment.key;
+    const uri = DEFAULT_URL + `?apikey=${key}&`;
     return this.http.get(
-      DEFAULT_URL +
+      uri +
         Object.keys(params)
           .map((key) => `${key}=${params[key]}`)
           .join('&')
@@ -109,16 +111,4 @@ export class StocksAPI {
   //     this.self.timeSeries({ symbol, interval, amount }) as Promise<TickerData>
   //   );
   // }
-
-  // TSLA$: Observable<TickerData> = this.PortfoliosAPI.getStockData(
-  //   'TSLA',
-  //   'daily',
-  //   10
-  // );
-  // MSFT$: Observable<TickerData> = this.PortfoliosAPI.getStockData(
-  //   'MSFT',
-  //   'daily',
-  //   10
-  // );
-  // V$: Observable<TickerData> = this.PortfoliosAPI.getStockData('V', 'daily', 10);
 }

@@ -12,6 +12,9 @@ declare global {
   interface Object {
     forEach: (arg1?: any, arg2?: any) => any;
   }
+  interface String {
+    capitalize: () => any;
+  }
 }
 
 if (!Object.prototype.forEach) {
@@ -29,5 +32,11 @@ if (!Object.prototype.forEach) {
     },
   });
 }
+Object.defineProperty(String.prototype, 'capitalize', {
+  value: function () {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+  },
+  enumerable: false,
+});
 
 platformBrowserDynamic().bootstrapModule(AppModule).catch(console.error);

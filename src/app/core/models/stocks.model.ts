@@ -533,6 +533,8 @@ export interface Entry extends Partial<Quote> {
   uid: string;
   type: BuyorSell;
   price: number;
+  profit?: number;
+  currentWorth?: number;
   quantity: number;
   fees: number;
   open?: number;

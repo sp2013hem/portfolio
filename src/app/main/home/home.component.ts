@@ -4,6 +4,7 @@ import { Store } from '@ngrx/store';
 import { filter } from 'rxjs/operators';
 import { AuthSelectors } from 'src/app/auth/store';
 import { PortfolioActions, PortfolioSelectors } from '../store';
+const today = new Date().getHours();
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,12 @@ import { PortfolioActions, PortfolioSelectors } from '../store';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnDestroy, OnInit {
+  greeting = (today < 12
+    ? 'good morning'
+    : today < 18
+    ? 'good afternoon'
+    : 'good evening'
+  ).capitalize();
   panelOpenState;
   _$ = this.store
     .select(AuthSelectors.isAuthenticated)

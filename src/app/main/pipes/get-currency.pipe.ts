@@ -5,7 +5,7 @@ import { CurrencyMap, Entry } from 'src/app/core/models/stocks.model';
   name: 'getCurrency',
 })
 export class GetCurrencyPipe implements PipeTransform {
-  transform(value: string, currency: keyof typeof CurrencyMap): string {
-    return `${value}${CurrencyMap[currency].symbol}`;
+  transform(currency: keyof typeof CurrencyMap): string {
+    return `${CurrencyMap[currency].symbol}`;
   }
 }
