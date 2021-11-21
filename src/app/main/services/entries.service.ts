@@ -38,6 +38,36 @@ export class EntriesAPI {
     );
   }
 
+  delete(uid: string, pid: string, eid: string): Observable<boolean> {
+    // return of(true).pipe(delay(2000));
+    return from(
+      this.fireStoreService
+        .collection(`/users/${uid}/portfolios/${pid}/entries`)
+        .doc(eid)
+        .delete()
+    ).pipe(
+      mapTo(true),
+      catchError((err) => of(err))
+    );
+  }
+
+  edit(
+    data: EntryPayload,
+    uid: string,
+    pid: string,
+    eid: string
+  ): Observable<boolean> {
+    // return of(true).pipe(delay(2000));
+    return from(
+      this.fireStoreService
+        .collection(`/users/${uid}/portfolios/${pid}/entries`)
+        .doc(eid)
+        .update(data)
+    ).pipe(
+      mapTo(true),
+      catchError((err) => of(err))
+    );
+  }
   deletePortfolio(userId: string, uid: string): Observable<boolean> {
     // return of(true).pipe(delay(2000));
     return from(

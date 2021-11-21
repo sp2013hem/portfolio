@@ -9,7 +9,7 @@ module.exports = {
   purge: {
     content: ["./src/**/*.{html,ts,css,scss,sass,less,styl}"],
   },
-  darkMode: "class", // or 'media' or 'class'
+  darkMode: "media", ///or 'class'
   theme: {
     extend: {
       fontFamily: {

@@ -529,7 +529,7 @@ export interface Quote {
 export type BuyorSell = 'BUY' | 'SELL';
 export interface Entry extends Partial<Quote> {
   ticker: string;
-  date: Date;
+  date: Date | any;
   uid: string;
   type: BuyorSell;
   price: number;

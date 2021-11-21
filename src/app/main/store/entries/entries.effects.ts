@@ -7,6 +7,12 @@ import {
   EntriesCreatedFailed,
   EntriesCreatedRequested,
   EntriesCreatedSuccess,
+  EntriesDeleteFailed,
+  EntriesDeleteRequested,
+  EntriesDeleteSuccess,
+  EntriesEditFailed,
+  EntriesEditRequested,
+  EntriesEditSuccess,
   GetEntriesFailed,
   GetEntriesRequest,
   GetEntriesSuccess,
@@ -41,7 +47,7 @@ export class Effects {
     private store: Store
   ) {}
 
-  searchTickers$ = createEffect(() => {
+  addTickers$ = createEffect(() => {
     return this.actions$.pipe(
       ofType(EntriesCreatedRequested),
       withLatestFrom(
@@ -64,6 +70,74 @@ export class Effects {
                 EntriesCreatedFailed({
                   processingAddEntry: false,
                   created: false,
+                  error: err,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
+  editTickers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(EntriesEditRequested),
+      withLatestFrom(
+        this.store.select(AuthSelectors.UserInfo).pipe(filter((d) => !!d))
+      ),
+      switchMap((action) => {
+        
+        return this.entries
+          .edit(action[0].payload, action[1].uid, action[0].pid, action[0].eid)
+          .pipe(
+            map(() => {
+              
+              return EntriesEditSuccess({
+                updatedEntry: { ...action[0].payload, uid: action[0].eid },
+                processingEditEntry: false,
+                edited: true,
+              });
+            }),
+            catchError((err) => {
+              this.snackBar.open(err?.error || err);
+              return of(
+                EntriesEditFailed({
+                  processingEditEntry: false,
+                  edited: false,
+                  error: err,
+                })
+              );
+            })
+          );
+      })
+    );
+  });
+
+  deleteTickers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(EntriesDeleteRequested),
+      withLatestFrom(
+        this.store.select(AuthSelectors.UserInfo).pipe(filter((d) => !!d))
+      ),
+      switchMap((action) => {
+        
+        return this.entries
+          .delete(action[1].uid, action[0].pid, action[0].eid)
+          .pipe(
+            map(() => {
+              
+              return EntriesDeleteSuccess({
+                uid: action[0].eid,
+                processingDeleteEntry: false,
+                deleted: true,
+              });
+            }),
+            catchError((err) => {
+              this.snackBar.open(err?.error || err);
+              return of(
+                EntriesDeleteFailed({
+                  processingDeleteEntry: false,
+                  deleted: false,
                   error: err,
                 })
               );

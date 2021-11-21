@@ -1,5 +1,5 @@
 <mat-stepper linear #stepper>
-  <mat-step [stepControl]="first" class="mb-5">
+  <mat-step [stepControl]="first" class="mb-5" *ngIf="!entry">
     <form autocomplete="off" class="mt-4" [formGroup]="first">
       <ng-template matStepLabel>Select your stock</ng-template>
       <mat-form-field class="w-full">
@@ -58,19 +58,37 @@
 
       <mat-form-field class="w-full">
         <mat-label>Price per unit</mat-label>
-        <input matInput formControlName="price" type="number" />
+        <input
+          matInput
+          formControlName="price"
+          type="number"
+          step="0.01"
+          inputmode="decimal"
+        />
       </mat-form-field>
 
       <mat-form-field class="w-full">
         <mat-label
           >Quantity {{ buyOrSell === "BUY" ? "bought" : "sold" }}
         </mat-label>
-        <input matInput formControlName="quantity" type="number" />
+        <input
+          matInput
+          formControlName="quantity"
+          type="number"
+          step="0.01"
+          inputmode="decimal"
+        />
       </mat-form-field>
 
       <mat-form-field class="w-full">
         <mat-label>Transaction/Broker fee</mat-label>
-        <input matInput formControlName="fees" type="number" />
+        <input
+          matInput
+          formControlName="fees"
+          type="number"
+          step="0.01"
+          inputmode="decimal"
+        />
       </mat-form-field>
 
       <mat-form-field class="w-full">
@@ -86,7 +104,7 @@
       </mat-form-field>
 
       <div class="w-full flex justify-end">
-        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button matStepperPrevious *ngIf="!entry">Back</button>
         <button mat-raised-button color="primary">Submit</button>
       </div>
     </form>

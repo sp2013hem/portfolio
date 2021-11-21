@@ -15,6 +15,10 @@ export const entryCreated = createSelector(
   entriesFeatureSelector,
   (state) => state.created
 );
+export const AllEntries = createSelector(
+  entriesFeatureSelector,
+  (state) => state.entries
+);
 
 export const entries = createSelector(entriesFeatureSelector, (state) => {
   const groupedByTicker = groupedBy(state.entries, 'ticker');
@@ -44,7 +48,6 @@ const groupedBy = function <T>(data: T, by: string): Record<string, T> {
   });
   return store;
 };
-
 const getSummaryOfEntries = function (data: Entry[]): Entry | null {
   const buys = data.filter((d) => d.type === 'BUY');
   const sells = data.filter((d) => d.type === 'SELL');

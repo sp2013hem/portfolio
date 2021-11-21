@@ -36,6 +36,8 @@
         class="block"
         [portfolio]="portfolio"
         (openTicker)="openTickerDialog($event)"
+        (editEntry)="openTickerDialog(portfolio.uid, $event.entry)"
+        (deleteEntry)="deleteEntry(portfolio.uid, $event.entry.uid)"
       ></app-table>
       <button
         mat-icon-button

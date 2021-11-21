@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { Portfolio } from 'src/app/core/models/stocks.model';
+import { Entry, Portfolio } from 'src/app/core/models/stocks.model';
 import { EntriesActions, PortfolioActions } from '../../store';
 import { AddPortfolioComponent } from '../add-portfolio/add-portfolio.component';
 import { AddTickerComponent } from '../add-ticker/add-ticker.component';
@@ -38,7 +38,7 @@ export class MyPortfoliosComponent implements OnDestroy {
         next: () => this.store.dispatch(PortfolioActions.RequestMyPortfolios()),
       });
   }
-  openTickerDialog(uid: string) {
+  openTickerDialog(pid: string, entry: Entry) {
     const ref = this.dialog.open(AddTickerComponent, {
       autoFocus: false,
       hasBackdrop: true,
@@ -46,7 +46,7 @@ export class MyPortfoliosComponent implements OnDestroy {
       minWidth: '100%',
       maxWidth: '600px',
       minHeight: '500px',
-      data: uid,
+      data: entry,
     });
     this._$.dialogTickerRef?.unsubscribe();
     this._$.dialogTickerRef = ref
@@ -55,9 +55,18 @@ export class MyPortfoliosComponent implements OnDestroy {
       .subscribe({
         next: (payload) =>
           this.store.dispatch(
-            EntriesActions.EntriesCreatedRequested({ payload, pid: uid })
+            entry.uid
+              ? EntriesActions.EntriesEditRequested({
+                  payload,
+                  pid,
+                  eid: entry.uid,
+                })
+              : EntriesActions.EntriesCreatedRequested({ payload, pid })
           ),
       });
+  }
+  deleteEntry(pid: string, eid: string) {
+    this.store.dispatch(EntriesActions.EntriesDeleteRequested({ pid, eid }));
   }
   deletePortfolio(e, uid: string) {
     this.progress = e / 10;
